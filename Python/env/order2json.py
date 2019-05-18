@@ -3,6 +3,7 @@
 order = []                                  # 所有订单
 
 def interprete():
+
     with open('../../../data/order-uniq-20180501.txt', mode='r') as fr:
         while True:
             line = fr.readline()            # 读取整行
