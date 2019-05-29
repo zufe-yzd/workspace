@@ -5,6 +5,7 @@ orderData = []
 
 did = []
 
+
 def interprete():
     with open('../../../data/order-uniq-20180501.txt', mode='r') as fo:
         num = 0
