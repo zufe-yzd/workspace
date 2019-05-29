@@ -3,6 +3,8 @@ var tipBox = d3.select("body")
 	.style("border","1px solid black")
 	.style("margin","20px");
 
+d3.select("body").style("overflow","scroll");
+
 tipBox.append("p").html("时间：<span id='time'>00:00:00</span>");
 tipBox.append("p").html("流量：<span id='count'>0</span>");
 
@@ -8718,17 +8720,3 @@ var pointer = svg.append("circle")
 			.attr("stroke-width",1)
 			.attr("stroke", "white")
 			.attr("transform","translate(2.2,"+(height - padding.bottom)+")");
-
-var drager = svg.append("rect")
-			.attr("x",0)
-			.attr("y",padding.top + yScale(200))
-			.attr("width",1200)
-			.attr("height",2)
-			.attr("fill","white")
-			.attr("stroke-width",0)
-			.on("mouseover",function() {
-				d3.select(this).attr("width",4);
-			})
-			.on("mouseout",function() {
-				d3.select(this).attr("width",2);
-			});
