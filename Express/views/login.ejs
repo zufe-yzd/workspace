@@ -2,19 +2,20 @@
 <html>
 <head>
 	<meta charset="utf-8" />
-	<title>Home</title>
-	<script type="text/javascript" src="javascripts/jquery.min.js"></script>
-	<script type="text/javascript" src="javascripts/d3.js"></script>
-	<script type="text/javascript" src="javascripts/hexagonchart.js"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Map</title>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+	<script type="text/javascript" src="javascripts/d3.v4.js"></script>
+	<script src="javascripts/jquery.min.js"></script>
+    <script src="javascripts/heatmap.js"></script>
+    <script src="javascripts/leaflet-heatmap.js"></script>
 	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<!--script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=NK09qFifchzW6hev1wLXd9cfaklxWhqf">
-		</script-->
 	<link href="stylesheets/bootstrap.min.css" rel="stylesheet" />
 	<link rel="stylesheet" href="stylesheets/mycss.css" />
 </head>
 <body>
-	<!--div id="allmap">
-	</div>
-	<script src="javascripts/myjs.js"></script-->
-	<script type="text/javascript" src="javascripts/yzd.js"></script>
+	<div id="map"  style="width:1400px;height:700px;border:#ccc solid 1px;font-size:12px"></div>
+    
+	<script src="javascripts/myjs.js"></script>
 </body>
