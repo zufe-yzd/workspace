@@ -101,3 +101,9 @@ p {
 	line-height: 1.5em;
 	margin: 2px 10px;
 }
+
+.smallbtn {
+	width: 20px;
+	height: 20px;
+	padding: 0px 4px 4px 4px;
+}

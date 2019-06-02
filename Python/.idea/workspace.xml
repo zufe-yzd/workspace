@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="64109222-1377-4707-b528-2649b38b6d09" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../Express/public/data/gps_by_time_match.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Express/public/data/gps_by_time_match.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Express/public/data/timeline.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Express/public/data/timeline.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Express/public/data/speed.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Express/public/data/speed.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Express/public/javascripts/myjs.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Express/public/javascripts/myjs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Express/public/javascripts/yzd.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Express/public/javascripts/yzd.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Express/public/stylesheets/mycss.css" beforeDir="false" afterPath="$PROJECT_DIR$/../Express/public/stylesheets/mycss.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Express/views/login.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/../Express/views/login.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

@@ -1,6 +1,7 @@
 #include<iostream>
 #include<fstream>
 #include<vector>
+#include<math.h>
 using namespace std;
 
 struct GPS {
@@ -12,6 +13,7 @@ struct GPS {
 struct Point {
 	double x;
 	double y;
+	double speed;
 };
 
 struct TimeData {
@@ -141,6 +143,36 @@ int main() {
 				Point p;
 				p.x = orders[i].data.at(e).x;
 				p.y = orders[i].data.at(e).y;
+				if (orders[i].data.size()<=1) {
+					p.speed = -1;
+				}
+				else if (e==0) {
+					double x1 = orders[i].data.at(e+1).x;
+					double y1 = orders[i].data.at(e+1).y;
+					double t1 = parseDouble(orders[i].data.at(e).time);
+					double t2 = parseDouble(orders[i].data.at(e+1).time);
+					double lx = (p.x-x1)*67605;
+					double ly = (p.y-y1)*111000;
+					p.speed = sqrt(pow(lx,2)+pow(ly,2))*1.000000/(t2-t1);
+				}
+				else if (e==orders[i].data.size()-1) {
+					double x1 = orders[i].data.at(e).x;
+					double y1 = orders[i].data.at(e).y;
+					double t1 = parseDouble(orders[i].data.at(e-1).time);
+					double t2 = parseDouble(orders[i].data.at(e).time);
+					double lx = (p.x-x1)*67605;
+					double ly = (p.y-y1)*111000;
+					p.speed = sqrt(pow(lx,2)+pow(ly,2))*1.000000/(t2-t1);
+				}
+				else {
+					double x1 = orders[i].data.at(e+1).x;
+					double y1 = orders[i].data.at(e+1).y;
+					double t1 = parseDouble(orders[i].data.at(e-1).time);
+					double t2 = parseDouble(orders[i].data.at(e+1).time);
+					double lx = (p.x-x1)*67605;
+					double ly = (p.y-y1)*111000;
+					p.speed = sqrt(pow(lx,2)+pow(ly,2))*1.000000/(t2-t1);
+				}
 				timedata[time].data.push_back(p);
 			}
 		}
@@ -148,27 +180,17 @@ int main() {
 	}
 	
 	ofstream offile;
-	offile.open("gps_by_time_match.json");
-	offile << "[";
+	offile.open("speed.json");
 	for (int i=0;i<8640;i++) {
-		offile << "{\"time\":" << timedata[i].time << ",\"data\":" << "[";
-		for (int e=0;e<timedata[i].data.size();e++) {
-			offile << "[" << timedata[i].data.at(e).x << "," << timedata[i].data.at(e).y << "]";
-			if (e!=timedata[i].data.size()-1)
-				offile << ",";
+		offile << "{\"time\":" << timedata[i].time << ",\"speed\":";
+		double s = 0;
+		for (int j=0;j<timedata[i].data.size();j++) {
+			if (timedata[i].data.at(j).speed==-1)
+				continue;
+			s += timedata[i].data.at(j).speed;
 		}
-		offile << "]}";
-		if (i<ALL-1)
-			offile << ",";
-		offile << endl;
-		cout << "WRITTEN IN " << i+1 << " / " << 8640 << endl;
-	}
-	offile << "]" << endl;
-	offile.close();
-	
-	offile.open("timeline.json");
-	for (int i=0;i<8640;i++) {
-		offile << "{\"time\":" << timedata[i].time << ",\"count\":" << timedata[i].data.size() << "}";
+		s = 1.000000 * s / timedata[i].data.size();
+		offile << s << "}";
 		if (i<ALL-1)
 			offile << ",";
 		cout << "MARKED DOWN " << i+1 << " / " << 8640 << endl;
