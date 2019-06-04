@@ -1,4 +1,4 @@
-#!C:\Users\lenovo\Desktop\project\workspace\Python\env\Scripts\python.exe
+#!C:\Users\lenovo\Desktop\project\final\Python\env\Scripts\python.exe
 # EASY-INSTALL-ENTRY-SCRIPT: 'pip==10.0.1','console_scripts','pip3'
 __requires__ = 'pip==10.0.1'
 import re
