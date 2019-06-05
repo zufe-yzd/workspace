@@ -1,45 +1,37 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8" />
-	<title>Home</title>
-	<script type="text/javascript" src="javascripts/jquery.min.js"></script>
-	<script type="text/javascript" src="javascripts/d3.js"></script>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>Map</title>
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css">
-	<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
-	<script type="text/javascript" src="javascripts/d3.v4.js"></script>
-	<script src="javascripts/jquery.min.js"></script>
-    <script src="javascripts/heatmap.js"></script>
-    <script src="javascripts/leaflet-heatmap.js"></script>
-	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<link href="stylesheets/bootstrap.min.css" rel="stylesheet" />
-	<link rel="stylesheet" href="stylesheets/mycss.css" />
-</head>
-<body>
-	<div class="header">
-		<h3>Top</h3>
+<%- include header %>
+	<li class="active"><a href="/login">外围</a></li>
+	<li><a href="/page2">监控</a></li>
+	<li><a href="#">全局</a></li>
+	<li><a href="#">统计</a></li>
+<%- include left %>
+
+<div class="col-xs-4 col-sm-4" style="height:590px;">
+	<div class="row" style="height:195px;">
+		<div class="piece col-xs-11 col-sm-11 col-md-offset-1" id="chart3"></div>
 	</div>
-	<div class="row">
-		<div class="leftcolumn">
-			<div class="card">
-				<div class="fakeimg" id="chart3" style="height:140px; position: relative; top:10px"></div>
-			</div>
-			<div class="card">
-				<div class="fakeimg" id="chart2" style="height:102px; position: relative; top:10px"></div>
-			</div>
-			<div class="card">
-				<div class="fakeimg" id="chart1" style="height:200px; position: relative; top:10px"></div>
-			</div>
-		</div>
-		<div class="rightcolumn">
-			<div id="map" class="card" style="height: 600px;">
-			</div>
-		</div>
+	<div class="row" style="height:175px; margin-top: 15px;">
+		<div class="piece col-xs-11 col-sm-11 col-md-offset-1" id="chart2"></div>
 	</div>
-	<div class="footer">
-		<h2>底部区域</h2>
+	<div class="row" style="height:190px; margin-top: 15px;">
+		<div class="piece col-xs-11 col-sm-11 col-md-offset-1" id="chart1"></div>
 	</div>
-	<script src="javascripts/myjs.js"></script>
-</body>
+</div>
+<div class="col-xs-5 col-sm-5" style="height:590px;">
+	<div class="piece col-xs-12 col-sm-12" id="map" style="height: 590px;">
+	</div>
+</div>
+<div class="col-xs-3 col-sm-3" style="height:590px; margin-left: -30px;">
+	<div class="row" style="height:195px;">
+		<div class="piece col-xs-11 col-sm-11 col-md-offset-1" id="rchart3"></div>
+	</div>
+	<div class="row" style="height:175px; margin-top: 15px;">
+		<div class="piece col-xs-11 col-sm-11 col-md-offset-1" id="rchart2"></div>
+	</div>
+	<div class="row" style="height:190px; margin-top: 15px;">
+		<div class="piece col-xs-11 col-sm-11 col-md-offset-1" id="rchart1"></div>
+	</div>
+</div>
+
+<%- include footer %>
+<script src="javascripts/myjs.js"></script>
+<%- include after %>

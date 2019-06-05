@@ -1,8 +1,11 @@
-body, html, #allmap {
+body, html {
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
 	margin: 0;
+	padding: 0;
+	background: black;
+	color: white;
 	font-family: "微软雅黑";
 }
 
@@ -10,100 +13,55 @@ body, html, #allmap {
 	box-sizing: border-box;
 }
 
-body {
-	font-family: Arial;
-	padding: 20px;
-	background: #F1F1F1;
-	overflow: hidden;
+li {
+	margin: 80px 0px;
+	font-size: 18px;
 }
 
-/* 头部标题 */
-.header {
-	padding: 2px;
-	text-align: center;
-	background: white;
+table {
+	font-size: 16px;
 }
 
-.header h1 {
-	font-size: 50px;
-}
-
-/* 导航条 */
-.topnav {
-	overflow: hidden;
-	background-color: #333;
-}
-
-/* 导航条链接 */
-.topnav a {
-	float: left;
-	display: block;
-	color: #f2f2f2;
-	text-align: center;
-	padding: 14px 16px;
-	text-decoration: none;
-}
-
-/* 链接颜色修改 */
-.topnav a:hover {
-	background-color: #ddd;
+tr {
 	color: black;
+	line-height: 1.8em;
+	margin: 4px;
 }
 
-/* 创建两列 */
-/* Left column */
-.leftcolumn {   
-	float: left;
-	width: 25%;
-	margin-left: 0px;
+th {
+	color: black;
+	padding: 6px;
+	background-color: #888888;
 }
 
-/* 右侧栏 */
-.rightcolumn {
-	float: left;
-	width: 75%;
-	background-color: #f1f1f1;
-	padding-left: 20px;
-	padding-right: 30px;
-	padding-bottom: 80px;
+td {
+	color: white;
+	padding: 6px;
+	background-color: #222222;
 }
 
-/* 图像部分 */
-.fakeimg {
-	background-color: #aaa;
-	width: 100%;
-	padding: 10px;
-}
-
-/* 文章卡片效果 */
-.card {
-	background-color: white;
-	padding: 20px;
-	margin-top: 20px;
-}
-
-/* 列后面清除浮动 */
-.row:after {
-	content: "";
-	display: table;
-	clear: both;
-}
-
-/* 底部 */
-.footer {
-	padding: 20px;
-	text-align: center;
-	background: #ddd;
-	margin-top: 20px;
-}
-
-p {
-	line-height: 1.5em;
-	margin: 2px 10px;
+.piece {
+	height: 100%;
+	padding: auto;
+	background-color: #444444;
 }
 
 .smallbtn {
 	width: 20px;
 	height: 20px;
 	padding: 0px 4px 4px 4px;
+}
+
+#title {
+	
+}
+
+#navigator {
+	border: 1px solid black;
+	padding: 20px 0px;
+}
+
+#container {
+	margin: 0px;
+	padding: 0px;
 }

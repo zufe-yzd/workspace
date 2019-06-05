@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>监控</title>
+	<script type="text/javascript" src="javascripts/jquery.min.js"></script>
+	<script type="text/javascript" src="javascripts/d3.js"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css">
+	<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+	<script type="text/javascript" src="javascripts/d3.v4.js"></script>
+	<script src="javascripts/jquery.min.js"></script>
+    <script src="javascripts/heatmap.js"></script>
+    <script src="javascripts/leaflet-heatmap.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="stylesheets/bootstrap.min.css" />
+	<link rel="stylesheet" href="stylesheets/mycss.css" />
+</head>
+<body>
+	<div class="col-xs-12 col-sm-12" style="height:728px;">
+		<div id="title" class="row" style="height:98px; padding: 15px;">
+			<h3>Top</h3>
+		</div>
+		<div class="row" style="height:630px;">
+			<div id="navigator" class="col-xs-1 col-sm-1" style="height:630px; left: 15px;">
+				<ul class="nav nav-pills nav-stacked">
+					<li><a href="/login">外围</a></li>
+					<li class="active"><a href="/page2">监控</a></li>
+					<li><a href="#">全局</a></li>
+					<li><a href="#">统计</a></li>
+				</ul>
+			</div>
+			<div id="container" class="col-xs-11 col-sm-11" style="top: 20px; height:590px;">
+				<div class="col-xs-4 col-sm-4" style="height:590px;">
+					<div class="row" style="height:195px;">
+						<div class="piece col-xs-11 col-sm-11 col-md-offset-1" id="chart3"></div>
+					</div>
+					<div class="row" style="height:175px; margin-top: 15px;">
+						<div class="piece col-xs-11 col-sm-11 col-md-offset-1" id="chart2"></div>
+					</div>
+					<div class="row" style="height:190px; margin-top: 15px;">
+						<div class="piece col-xs-11 col-sm-11 col-md-offset-1" id="chart1"></div>
+					</div>
+				</div>
+				<div class="col-xs-5 col-sm-5" style="height:590px;">
+					<div class="piece col-xs-12 col-sm-12" id="map" style="height: 590px;">
+					</div>
+				</div>
+				<div class="col-xs-3 col-sm-3" style="height:590px; margin-left: -30px;">
+					<div class="row" style="height:195px;">
+						<div class="piece col-xs-11 col-sm-11 col-md-offset-1" id="rchart3"></div>
+					</div>
+					<div class="row" style="height:175px; margin-top: 15px;">
+						<div class="piece col-xs-11 col-sm-11 col-md-offset-1" id="rchart2"></div>
+					</div>
+					<div class="row" style="height:190px; margin-top: 15px;">
+						<div class="piece col-xs-11 col-sm-11 col-md-offset-1" id="rchart1"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="javascripts/myjs.js"></script>
+</body>

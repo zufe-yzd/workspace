@@ -21,6 +21,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/login', require('./routes/login'));
+app.use('/page2', require('./routes/page2'));
 
 // 将路由控制器设为中间件
 app.use('/', indexRouter);
