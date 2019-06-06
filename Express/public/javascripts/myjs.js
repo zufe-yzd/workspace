@@ -10,11 +10,11 @@
 				return;
 			}
 			translate_x -= 1;
-			selected = parseInt((120-translate_x)*8640/1820);
 			d3.select("#svg1").selectAll(".rect")
 				.attr("transform","translate("+translate_x+",0)");
 			d3.select("#svg1").selectAll(".path")
 				.attr("transform","translate("+translate_x+",0)");
+			selected = parseInt((155-translate_x)*8640/1820);
 			var time = selected*10;
 			hour = parseInt(time / 3600);
 			hour = hour>=24 ? 0 : hour;
@@ -22,11 +22,19 @@
 			second = parseInt(time % 60);
 			d3.select("#time").text(hour+":"+minute+":"+second);
 			d3.select("#count").text(data[selected]["count"]);
-			d3.select("#speed").text(parseInt(speeddata[selected]["speed"]*10)/100 + "m/s");
-			d3.select("#float1").attr("cy",padding.top+yScale(data[selected]["count"]));
-			d3.select("#float2").attr("cy",padding.top+yScale_s(speeddata[selected]["speed"]));
+			d3.select("#speed").text(parseInt(speeddata[selected]["speed"]*10)/10 + "m/s");
+			// d3.select("#float1").attr("cy",padding.top+yScale(data[selected]["count"]));
+			// d3.select("#float2").attr("cy",padding.top+yScale_s(speeddata[selected]["speed"]));
 			if (speeddata[selected]["speed"]<=0)
 				d3.select("#speed").text("no record");
+			if (speeddata[selected]["speed"] < averSpeed / 2)
+				d3.select("#speed").style("color","red");
+			else
+				d3.select("#speed").style("color","LawnGreen");
+			if (data[selected]["count"] < averCount * 2)
+				d3.select("#count").style("color","green");
+			else
+				d3.select("#count").style("color","orange");
 			redraw(selected);
 		}
 
@@ -296,8 +304,8 @@
 				d3.select("#time").text(hour+":"+minute+":"+second);
 				d3.select("#count").text(data[selected]["count"]);
 				d3.select("#speed").text(parseInt(speeddata[selected]["speed"]*10)/10 + "m/s");
-				d3.select("#float1").attr("cy",padding.top+yScale(data[selected]["count"]));
-				d3.select("#float2").attr("cy",padding.top+yScale_s(speeddata[selected]["speed"]));
+				// d3.select("#float1").attr("cy",padding.top+yScale(data[selected]["count"]));
+				// d3.select("#float2").attr("cy",padding.top+yScale_s(speeddata[selected]["speed"]));
 				if (speeddata[selected]["speed"]<=0)
 					d3.select("#speed").text("no record");
 				if (speeddata[selected]["speed"] < averSpeed / 2)
@@ -323,23 +331,23 @@
 				.attr("points",(width/2)+",142 "+(width/2-8)+",157 "+(width/2+8)+",157")
 				.attr("style","fill: LawnGreen; stroke: green; stroke-width: 2");
 
-	var float1 = svg.append("circle")
-				.attr("id","float1")
-				.attr("cx",width/2)
-				.attr("cy",padding.top+yScale(data[5400]["count"]))
-				.attr("r",4)
-				.attr("fill","red")
-				.attr("stroke","white")
-				.attr("stroke-width",1);
+	// var float1 = svg.append("circle")
+	// 			.attr("id","float1")
+	// 			.attr("cx",width/2)
+	// 			.attr("cy",padding.top+yScale(data[5400]["count"]))
+	// 			.attr("r",4)
+	// 			.attr("fill","red")
+	// 			.attr("stroke","white")
+	// 			.attr("stroke-width",1);
 
-	var float2 = svg.append("circle")
-				.attr("id","float2")
-				.attr("cx",width/2)
-				.attr("cy",padding.top+yScale_s(speeddata[5400]["speed"]))
-				.attr("r",4)
-				.attr("fill","LawnGreen")
-				.attr("stroke","black")
-				.attr("stroke-width",2);
+	// var float2 = svg.append("circle")
+	// 			.attr("id","float2")
+	// 			.attr("cx",width/2)
+	// 			.attr("cy",padding.top+yScale_s(speeddata[5400]["speed"]))
+	// 			.attr("r",4)
+	// 			.attr("fill","LawnGreen")
+	// 			.attr("stroke","black")
+	// 			.attr("stroke-width",2);
 }
 
 // 热力图
@@ -353,7 +361,7 @@
 		return a;
 	}
 	var map1 = new L.Map('map', {
-				center: new L.LatLng(30.4620+0.0025, 104.0353-0.0019),//(30.4594579639, 104.0357266458),
+				center: new L.LatLng(30.4620+0.0025, 104.0353-0.0020),//(30.4594579639, 104.0357266458),
 				zoom: 14,
 			});
 
@@ -363,7 +371,7 @@
 			if (dataset[i]["data"].length==0)
 				gps[i].push({"lat":null, "lng":null,"count":1});
 			for (var j = 0; j < dataset[i]["data"].length; j++) {
-				gps[i].push({"lat":dataset[i]["data"][j][1]+0.0025, "lng":dataset[i]["data"][j][0]-0.0019,"count":1});
+				gps[i].push({"lat":dataset[i]["data"][j][1]+0.0025, "lng":dataset[i]["data"][j][0]-0.0020,"count":1});
 			}
 		}
 
@@ -447,7 +455,7 @@
 	    //     [30.4861, 104.0328+0.0262]
 	    // ]).addTo(map1);
 
-	    var polygon1 = new L.Circle([30.4620+0.0025, 104.0353-0.0019], 2280, {
+	    var polygon1 = new L.Circle([30.4620+0.0025, 104.0353-0.0020], 2280, {
 			color: 'blue', //颜色
 			fillOpacity: 0, //透明度
 			}).addTo(map1);
@@ -536,7 +544,7 @@
 	    */
 
 		//标记点
-	    var marker = L.marker([30.4620+0.0025, 104.0353-0.0019]);
+	    var marker = L.marker([30.4620+0.0025, 104.0353-0.0020]);
 	    marker.bindPopup("<b>顾拜旦现代五项赛事中心</b>");
 	    marker.addTo(map1);
 
