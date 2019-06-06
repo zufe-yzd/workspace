@@ -20,8 +20,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/index', require('./routes/index'));
 app.use('/login', require('./routes/login'));
 app.use('/page2', require('./routes/page2'));
+app.use('/page3', require('./routes/page3'));
 
 // 将路由控制器设为中间件
 app.use('/', indexRouter);

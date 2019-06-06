@@ -27,7 +27,9 @@
 			// d3.select("#float2").attr("cy",padding.top+yScale_s(speeddata[selected]["speed"]));
 			if (speeddata[selected]["speed"]<=0)
 				d3.select("#speed").text("no record");
-			if (speeddata[selected]["speed"] < averSpeed / 2)
+			if (speeddata[selected]["speed"] <= 0)
+				d3.select("#speed").style("color","grey");
+			else if (speeddata[selected]["speed"] < averSpeed / 2)
 				d3.select("#speed").style("color","red");
 			else
 				d3.select("#speed").style("color","LawnGreen");
@@ -262,7 +264,9 @@
 	d3.select("#count").text(data[5400]["count"]);
 	d3.select("#speed").text(parseInt(speeddata[5400]["speed"]*10)/10+"m/s");
 
-	if (speeddata[selected]["speed"] < averSpeed / 2)
+	if (speeddata[selected]["speed"] <= 0)
+		d3.select("#speed").style("color","grey");
+	else if (speeddata[selected]["speed"] < averSpeed / 2)
 		d3.select("#speed").style("color","red");
 	else
 		d3.select("#speed").style("color","LawnGreen");
@@ -333,7 +337,9 @@
 				// d3.select("#float2").attr("cy",padding.top+yScale_s(speeddata[selected]["speed"]));
 				if (speeddata[selected]["speed"]<=0)
 					d3.select("#speed").text("no record");
-				if (speeddata[selected]["speed"] < averSpeed / 2)
+				if (speeddata[selected]["speed"] <= 0)
+					d3.select("#speed").style("color","grey");
+				else if (speeddata[selected]["speed"] < averSpeed / 2)
 					d3.select("#speed").style("color","red");
 				else
 					d3.select("#speed").style("color","LawnGreen");
