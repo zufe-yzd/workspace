@@ -59,6 +59,17 @@
 		.style("margin","20px");
 
 
+	var tablehead_ti = tipBox.append("tr");
+	tablehead_ti.append("th").style("width","130px").text("日平均实时流量");
+	tablehead_ti.append("th").style("width","112px").text("自由行车速度");
+	tablehead_ti.append("th").style("width","120px").text("拥堵持续时间");
+
+	var tablecontent_ti = tipBox.append("tr");
+	tablecontent_ti.append("td").attr("id","ti1").text("0");
+	tablecontent_ti.append("td").attr("id","ti2").text("no record");
+	tablecontent_ti.append("td").attr("id","ti3").text("00:00:00");
+
+
 	var tablehead = tipBox.append("tr");
 	tablehead.append("th").style("width","130px").text("时间");
 	tablehead.append("th").style("width","112px").text("实时流量");
@@ -181,6 +192,7 @@
 			maxCount = data[i]["count"];
 	}
 	averCount /= data.length;
+	d3.select("#ti1").text(parseInt(averCount));
 	var averSpeed = 0, had = 0;
 	for (var i = 0; i < data.length; i++) {
 		if (speeddata[i]["speed"] > 0 && data[i]["count"] < averCount / 4) {
@@ -189,8 +201,21 @@
 		}
 	}
 	averSpeed /= had;
+	d3.select("#ti2").text(parseInt(averSpeed*10)/10 + "m/s");
 	// console.log(had);
 	// console.log(averSpeed);
+
+	var t3 = 0;
+	for (var i = 0; i < speeddata.length; i++) {
+		if (speeddata[i]["speed"] > 0 && speeddata[i]["speed"] < averSpeed / 2)
+			t3++;
+	}
+	t3 *= 10;
+	var h3 = parseInt(t3 / 3600);
+	h3 = h3>=24 ? 0 : h3;
+	m3 = parseInt((t3 - h3 * 3600)/60%60);
+	s3 = parseInt(t3 % 60);
+	d3.select("#ti3").text(h3+":"+m3+":"+s3);
 
 	var xScale = d3.scale.linear()
 					.domain([0, 8640])
