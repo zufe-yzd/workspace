@@ -3,7 +3,7 @@ import numpy as np
 import json
 import matplotlib.pyplot as plt
 
-genre = 200
+genre = 120
 all = []
 data = []
 
@@ -29,8 +29,8 @@ with open('../../Express/public/data/orderOUT.json', 'r') as f:
                 all[i].append([X[e][0], X[e][1]])
         pass
 
-    for i in range(0, genre):
-        print(all[i])
+    # for i in range(0, genre):
+    #     print(all[i])
 
     fw = open('../../Express/public/data/lines.json', mode='w')
 
