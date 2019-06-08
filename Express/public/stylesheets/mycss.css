@@ -24,7 +24,7 @@ table {
 }
 
 tr {
-	color: black;
+	color: white;
 	line-height: 1.8em;
 	margin: 4px;
 }
@@ -32,11 +32,12 @@ tr {
 th {
 	color: black;
 	padding: 6px;
+	text-align: center;
 	background-color: #888888;
 }
 
 td {
-	color: white;
+	color: inherit;
 	padding: 6px;
 	background-color: #222222;
 }

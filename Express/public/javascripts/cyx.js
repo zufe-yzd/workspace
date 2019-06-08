@@ -3,8 +3,8 @@
 	$.getJSON("/data/zones.json",function(dataset){
 		var width = 322;
 		var height = 110;
-		for (var z = 0; z < 12; z++) {
-			var svg = d3.select("#zone"+z)
+		for (var z = 0; z < 11; z++) {
+			var svg = d3.select("#zone"+(z+1))
 						.style("overflow","hidden")
 						.style("padding","0px")
 						.append("div")
@@ -13,7 +13,15 @@
 						.attr("id","svg"+z)
 						.attr("width",width)
 						.attr("height",height)
-						.style("border","1px solid #333");
+						.style("border","1px solid #333")
+						.on("mouseover",function() {
+							d3.select("#line"+d3.select(this).attr("id").substring(3,d3.select(this).attr("id").length)).style("color","LawnGreen");
+							d3.select(this).select("rect").attr("fill","black");
+						})
+						.on("mouseout",function() {
+							d3.select("#line"+d3.select(this).attr("id").substring(3,d3.select(this).attr("id").length)).style("color","white");
+							d3.select(this).select("rect").attr("fill","#222");
+						});
 
 
 			var padding = { top: 0, right: 0, bottom: 0, left: 0 };
@@ -23,14 +31,14 @@
 						.attr("y",padding.top)
 						.attr("width",width)
 						.attr("height",height - padding.top - padding.bottom)
-						.attr("fill","#333");
+						.attr("fill","#222");
 
 			var speeddata = [];
 			var countdata = [];
 
 			var piece = dataset[z]["data"];
 
-			for (var i = 0; i < piece.length; i+=10) {
+			for (var i = 0; i < piece.length; i+=20) {
 				countdata.push({"time":piece[i]["time"],"count":piece[i]["count"]});
 				speeddata.push({"time":piece[i]["time"],"speed":piece[i]["speed"]});
 			}
@@ -87,6 +95,10 @@
 				averSpeed /= had*1.1;
 			}
 
+			d3.select("#ti"+z+"c").text(parseInt(maxCount+0.5));
+			d3.select("#ti"+z+"d").text(parseInt(averCount+0.5) + " ρ½辆");
+			d3.select("#ti"+z+"e").text(parseInt(averSpeed*100+0.5)/100 + " m/s");
+
 			// 还原零点
 			for (var i = 0; i < speeddata.length; i++) {
 				if (countdata[i]["count"] <= 5 || speeddata[i]["speed"]==-255) {
@@ -125,14 +137,19 @@
 
 			var colortab2 = d3.interpolateRgb("#FFFF00", "#FF0000");
 
+			var tip = d3.select("#ti"+z+"c");
+
 			var rect = svg.selectAll("rect")
 						.data(countdata)
 						.enter()
 						.append("rect")
 						.attr("class","rect")
 						.attr("fill",function(d,i) {
-							if (speeddata[i]["speed"] < averSpeed / 2)
+							if (speeddata[i]["speed"] < averSpeed / 2) {
+								if (d["count"] < parseInt(tip.text()))
+									tip.text(d["count"]);
 								return colortab2((d["count"]-(maxCount/4.8))/(maxCount-maxCount/4.8));
+							}
 							return colortab1(d["count"]/(maxCount/2.4));
 						})
 						.attr("x", function(d,i) {
@@ -147,18 +164,7 @@
 						})
 						.attr("transform","translate(-322,0)");
 
-			// d3.select("#time").text("15:0:0");
-			// d3.select("#count").text(data[5400]["count"]);
-			// d3.select("#speed").text(parseInt(speeddata[5400]["speed"]*10)/10+"m/s");
-
-			// if (speeddata[selected]["speed"] < averSpeed / 2)
-			// 	d3.select("#speed").style("color","red");
-			// else
-			// 	d3.select("#speed").style("color","LawnGreen");
-			// if (data[selected]["count"] < averCount * 2)
-			// 	d3.select("#count").style("color","green");
-			// else
-			// 	d3.select("#count").style("color","orange");
+			tip.text(parseInt(Math.sqrt(parseInt(tip.text())*maxCount)) + " ρ½辆");
 
 
 			var linePath = d3.svg.line()
@@ -180,4 +186,54 @@
 				.attr("stroke", "yellow");
 		}
 	});
+}
+// 信息
+{
+	var tipBox = d3.select("#table")
+		.style("overflow","hidden")
+		.append("table")
+		.attr("border","0")
+		.style("margin","0px");
+
+
+	var tablehead_ti = tipBox.append("tr").style("font-size","12px");
+	tablehead_ti.append("th").style("width","40px").text("id");
+	tablehead_ti.append("th").style("width","200px").text("位置");
+	tablehead_ti.append("th").style("width","100px").text("车辆承载量");
+	tablehead_ti.append("th").style("width","120px").text("平均实时流量");
+	tablehead_ti.append("th").style("width","100px").text("自由行车速度");
+	tablehead_ti.append("th").style("width","120px").text("拥堵时段");
+
+	for (var i = 0; i < 11; i++) {
+		var tablecontent_ti = tipBox.append("tr").attr("id","line"+i).style("font-size","12px").style("line-height","1.4em")
+						.on("mouseover",function() {
+							d3.select("#zone"+d3.select(this).attr("id").substring(4,d3.select(this).attr("id").length)).select("rect").attr("fill","black");
+							d3.select(this).style("color","LawnGreen");
+						})
+						.on("mouseout",function() {
+							d3.select("#zone"+d3.select(this).attr("id").substring(4,d3.select(this).attr("id").length)).select("rect").attr("fill","#222");
+							d3.select(this).style("color","white");
+						});;
+		tablecontent_ti.append("td").attr("id","ti"+i+"a").text(i+1);
+		tablecontent_ti.append("td").attr("id","ti"+i+"b").text(" ? ");
+		tablecontent_ti.append("td").attr("id","ti"+i+"c").text("0");
+		tablecontent_ti.append("td").attr("id","ti"+i+"d").text("0");
+		tablecontent_ti.append("td").attr("id","ti"+i+"e").text("no record");
+		tablecontent_ti.append("td").attr("id","ti"+i+"f").text(" - ");
+		tablecontent_ti.selectAll("td").style("background-color",function() {
+			return i % 2 == 0 ? "#222222" : "#555555";
+		});
+	}
+
+	d3.select("#ti0b").text("剑南大道与武汉路交叉口");
+	d3.select("#ti1b").text("剑南大道南一段南端");
+	d3.select("#ti2b").text("剑南大道与沈阳路交叉口");
+	d3.select("#ti3b").text("剑南大道南一段北端");
+	d3.select("#ti4b").text("祥鹤四街西段");
+	d3.select("#ti5b").text("祥鹤四街东段");
+	d3.select("#ti6b").text("沈阳路西段优品道锦绣附近");
+	d3.select("#ti7b").text("沈阳路西段天府四中附近");
+	d3.select("#ti8b").text("沿河道路北段");
+	d3.select("#ti9b").text("龙马路东段");
+	d3.select("#ti10b").text("武汉路西段东端");
 }
