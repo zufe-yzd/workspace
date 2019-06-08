@@ -20,7 +20,7 @@
 						})
 						.on("mouseout",function() {
 							d3.select("#line"+d3.select(this).attr("id").substring(3,d3.select(this).attr("id").length)).style("color","white");
-							d3.select(this).select("rect").attr("fill","#222");
+							d3.select(this).select("rect").attr("fill","#262626");
 						});
 
 
@@ -31,7 +31,7 @@
 						.attr("y",padding.top)
 						.attr("width",width)
 						.attr("height",height - padding.top - padding.bottom)
-						.attr("fill","#222");
+						.attr("fill","#262626");
 
 			var speeddata = [];
 			var countdata = [];
@@ -109,7 +109,8 @@
 			// 调整折线图显示效果
 			for (var i = 0; i < speeddata.length; i++) {
 				if (i > 0 && i < speeddata.length - 1) {
-					speeddata[i]["speed"] = Math.sqrt(Math.pow(speeddata[i]["speed"], 2) + Math.pow((speeddata[i-1]["speed"] + speeddata[i+1]["speed"]) / 2, 2));
+					speeddata[i]["speed"] = 
+							Math.sqrt(Math.pow(speeddata[i]["speed"], 2) + Math.pow((speeddata[i-1]["speed"] + speeddata[i+1]["speed"]) / 2, 2));
 					var aver = 0;
 					var left = i < 10 ? 0 : i - 10;
 					var right = i > speeddata.length - 11 ? speeddata.length - 1 : i + 10;
@@ -166,6 +167,97 @@
 
 			tip.text(parseInt(Math.sqrt(parseInt(tip.text())*maxCount)) + " ρ½辆");
 
+			// 建立数组
+			var status = [];
+			for (var i = 0; i < speeddata.length; i++) {
+				var bool = speeddata[i]["speed"] < averSpeed / 2 ? true : false;
+				status.push({crowded:bool,start:speeddata[i]["time"],end:speeddata[i]["time"]})
+			}
+			var all = [];
+			var update = status[0];
+			var bool = status[0]["crowded"];
+			for (var i = 1; i < status.length; i++) {
+				if (status[i]["crowded"] == bool) {
+					update["end"] = status[i]["end"];
+				}
+				else {
+					all.push(update);
+					update = status[i];
+					bool = status[i]["crowded"];
+				}
+			}
+			all.push(update);
+			status = all;
+			var minlen = status[0]["end"]-status[0]["start"];
+			for (var i = 0; i < status.length; i++) {
+				if (minlen > status[i]["end"]-status[i]["start"])
+					minlen = status[i]["end"]-status[i]["start"];
+			}
+			// 迭代至分堆最小时间跨度大于二十分钟
+			while (minlen < 1200) {
+				for (var i = 1; i < status.length-1; i++) {
+					if (status[i]["end"]-status[i]["start"] >= 1200 && status[i]["crowded"]==true)
+						continue;
+					if (status[i]["end"]-status[i]["start"] < (status[i+1]["end"]-status[i-1]["start"])/4) {
+						status[i]["crowded"] = status[i+1]["crowded"];
+					}
+				}
+				try {
+					if (status[status.length-1]["end"]-status[status.length-1]["start"] >= 1200 && status[status.length-1]["crowded"]==true);
+					else if (status[status.length-1]["end"]-status[status.length-1]["start"] 
+								< (status[status.length-2]["end"]-status[status.length-2]["start"])/3) {
+						status[status.length-1]["crowded"] = status[status.length-2]["crowded"];
+					}
+				} catch (error) {
+					break;
+				}
+				var all = [];
+				var update = status[0];
+				var bool = status[0]["crowded"];
+				for (var i = 1; i < status.length; i++) {
+					if (status[i]["crowded"] == bool) {
+						update["end"] = status[i]["end"];
+					}
+					else {
+						all.push(update);
+						update = status[i];
+						bool = status[i]["crowded"];
+					}
+				}
+				all.push(update);
+				status = all;
+				minlen = status[0]["end"]-status[0]["start"];
+				for (var i = 0; i < status.length; i++) {
+					if (minlen > status[i]["end"]-status[i]["start"])
+						minlen = status[i]["end"]-status[i]["start"];
+				}
+			}
+			for (var i = 0; i < status.length; i++) {
+				if (status[i]["crowded"] == true) {
+					if (d3.select("#ti"+z+"f").html() == " - ")
+						d3.select("#ti"+z+"f").html(str2time(status[i]["start"]) + " - " + str2time(status[i]["end"]));
+					else
+						d3.select("#ti"+z+"f").html(d3.select("#ti"+z+"f").html() 
+														+ "<br />" + str2time(status[i]["start"]) + " - " + str2time(status[i]["end"]));
+					d3.select("#svg"+z)
+						.append("rect")
+						.attr("class", "will")
+						.attr("x", function() {
+							return padding.left + parseInt(status[i]["start"]/10) * (width*2 - padding.left - padding.right)/8641;
+						})
+						.attr("y", function() {
+							return padding.top;
+						})
+						.attr("width", function() {
+							return padding.left + parseInt(status[i]["end"]/10) * (width*2 - padding.left - padding.right)/8641 
+									- d3.select(this).attr("x");
+						})
+						.attr("height", height - padding.top - padding.bottom)
+						.attr("transform","translate(-322,0)")
+						.attr("fill", "red")
+						.attr("opacity", 0.3);
+				}
+			}
 
 			var linePath = d3.svg.line()
 				.interpolate("linear")
@@ -185,33 +277,51 @@
 				.attr("stroke-width",0.7)
 				.attr("stroke", "yellow");
 		}
+
+		//表格紧凑
+		d3.select("#table")
+			.select("table")
+			.selectAll("td")
+			.style("padding","4.51px 6px");
 	});
 }
 // 信息
 {
 	var tipBox = d3.select("#table")
 		.style("overflow","hidden")
+		.style("padding","0px")
 		.append("table")
 		.attr("border","0")
 		.style("margin","0px");
 
 
+	function str2time(str) {
+		var hour = parseInt(parseInt(str)/3600);
+		var minute = parseInt((parseInt(str)%3600)/60);
+		if (minute < 10)
+			minute = "0" + minute;
+		return hour + ":" + minute;
+	}
+
+
 	var tablehead_ti = tipBox.append("tr").style("font-size","12px");
 	tablehead_ti.append("th").style("width","40px").text("id");
-	tablehead_ti.append("th").style("width","200px").text("位置");
-	tablehead_ti.append("th").style("width","100px").text("车辆承载量");
-	tablehead_ti.append("th").style("width","120px").text("平均实时流量");
-	tablehead_ti.append("th").style("width","100px").text("自由行车速度");
-	tablehead_ti.append("th").style("width","120px").text("拥堵时段");
+	tablehead_ti.append("th").style("width","220px").text("位置");
+	tablehead_ti.append("th").style("font-size","10px").style("width","80px").text("车辆承载量");
+	tablehead_ti.append("th").style("font-size","10px").style("width","90px").text("平均实时流量");
+	tablehead_ti.append("th").style("font-size","10px").style("width","80px").text("自由行车速度");
+	tablehead_ti.append("th").style("width","160px").text("拥堵时段");
 
 	for (var i = 0; i < 11; i++) {
-		var tablecontent_ti = tipBox.append("tr").attr("id","line"+i).style("font-size","12px").style("line-height","1.4em")
+		var tablecontent_ti = tipBox.append("tr").attr("id","line"+i).style("font-size","12px").style("line-height","16.4px")
 						.on("mouseover",function() {
-							d3.select("#zone"+d3.select(this).attr("id").substring(4,d3.select(this).attr("id").length)).select("rect").attr("fill","black");
+							d3.select("#zone"+(parseInt(d3.select(this).attr("id").substring(4,d3.select(this).attr("id").length))+1))
+										.select("rect").attr("fill","black");
 							d3.select(this).style("color","LawnGreen");
 						})
 						.on("mouseout",function() {
-							d3.select("#zone"+d3.select(this).attr("id").substring(4,d3.select(this).attr("id").length)).select("rect").attr("fill","#222");
+							d3.select("#zone"+(parseInt(d3.select(this).attr("id").substring(4,d3.select(this).attr("id").length))+1))
+										.select("rect").attr("fill","#262626");
 							d3.select(this).style("color","white");
 						});;
 		tablecontent_ti.append("td").attr("id","ti"+i+"a").text(i+1);
@@ -220,9 +330,11 @@
 		tablecontent_ti.append("td").attr("id","ti"+i+"d").text("0");
 		tablecontent_ti.append("td").attr("id","ti"+i+"e").text("no record");
 		tablecontent_ti.append("td").attr("id","ti"+i+"f").text(" - ");
-		tablecontent_ti.selectAll("td").style("background-color",function() {
-			return i % 2 == 0 ? "#222222" : "#555555";
-		});
+		tablecontent_ti.selectAll("td")
+					.style("background-color",function() {
+						return i % 2 == 0 ? "#222222" : "#555555";
+					})
+					.style("padding","4.51px 6px");
 	}
 
 	d3.select("#ti0b").text("剑南大道与武汉路交叉口");
