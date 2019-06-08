@@ -25,10 +25,10 @@
 			d3.select("#speed").text(parseInt(speeddata[selected]["speed"]*10)/10 + "m/s");
 			// d3.select("#float1").attr("cy",padding.top+yScale(data[selected]["count"]));
 			// d3.select("#float2").attr("cy",padding.top+yScale_s(speeddata[selected]["speed"]));
-			if (speeddata[selected]["speed"]<=0)
+			if (data[selected]["count"]<=0) {
 				d3.select("#speed").text("no record");
-			if (speeddata[selected]["speed"] <= 0)
 				d3.select("#speed").style("color","grey");
+			}
 			else if (speeddata[selected]["speed"] < averSpeed / 2)
 				d3.select("#speed").style("color","red");
 			else
@@ -207,6 +207,28 @@
 	// console.log(had);
 	// console.log(averSpeed);
 
+	// 还原零点
+	for (var i = 0; i < speeddata.length; i++) {
+		if (data[i]["count"] <= 5 || speeddata[i]["speed"]==-255) {
+			speeddata[i]["speed"] = averSpeed;
+		}
+	}
+
+	// 调整折线图显示效果
+	for (var i = 0; i < speeddata.length; i++) {
+		if (i > 0 && i < speeddata.length - 1) {
+			speeddata[i]["speed"] = Math.sqrt(Math.pow(speeddata[i]["speed"], 2) + Math.pow((speeddata[i-1]["speed"] + speeddata[i+1]["speed"]) / 2, 2));
+			var aver = 0;
+			var left = i < 10 ? 0 : i - 10;
+			var right = i > speeddata.length - 11 ? speeddata.length - 1 : i + 10;
+			for (var a = left; a <= right; a++)
+				aver += speeddata[a]["speed"];
+			aver /= (right - left + 1);
+			if (speeddata[i]["speed"] >= aver * 1.2)
+				speeddata[i]["speed"] = aver * 1.2;
+		}
+	}
+
 	var t3 = 0;
 	for (var i = 0; i < speeddata.length; i++) {
 		if (speeddata[i]["speed"] > 0 && speeddata[i]["speed"] < averSpeed / 2)
@@ -278,7 +300,7 @@
 
 	var linePath = d3.svg.line()
 		.interpolate("linear")
-		.x(function(d){ return padding.left + d["time"]/10 * (width - padding.left - padding.right)/8641 * 5; })
+		.x(function(d){ return padding.left + d["time"]/10 * (width - padding.left - padding.right)/8641 * 5 / 1820 * 1788 + 32; })
 		.y(function(d){ return padding.top + yScale_s(d["speed"]); });
 
 	svg.selectAll("path")
@@ -335,10 +357,10 @@
 				d3.select("#speed").text(parseInt(speeddata[selected]["speed"]*10)/10 + "m/s");
 				// d3.select("#float1").attr("cy",padding.top+yScale(data[selected]["count"]));
 				// d3.select("#float2").attr("cy",padding.top+yScale_s(speeddata[selected]["speed"]));
-				if (speeddata[selected]["speed"]<=0)
+				if (data[selected]["count"]<=0) {
 					d3.select("#speed").text("no record");
-				if (speeddata[selected]["speed"] <= 0)
 					d3.select("#speed").style("color","grey");
+				}
 				else if (speeddata[selected]["speed"] < averSpeed / 2)
 					d3.select("#speed").style("color","red");
 				else

@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="64109222-1377-4707-b528-2649b38b6d09" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../Express/public/data/lines.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Express/public/data/lines.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Express/public/javascripts/myjs3.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Express/public/javascripts/myjs3.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Express/views/page3.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/../Express/views/page3.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Express/views/page2.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/../Express/views/page2.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/env/k-means.py" beforeDir="false" afterPath="$PROJECT_DIR$/env/k-means.py" afterDir="false" />
     </list>
@@ -18,8 +19,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/env/k-means.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-490">
-              <caret line="34" column="40" selection-start-line="34" selection-start-column="40" selection-end-line="34" selection-end-column="40" />
+            <state relative-caret-position="377">
+              <caret line="60" column="14" selection-start-line="60" selection-start-column="14" selection-end-line="60" selection-end-column="14" />
               <folding>
                 <element signature="e#0#34#0" expanded="true" />
               </folding>
@@ -286,6 +287,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.24966975" />
@@ -329,8 +331,8 @@
     <entry file="file://$PROJECT_DIR$/env/data_by_time.py" />
     <entry file="file://$PROJECT_DIR$/env/k-means.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-490">
-          <caret line="34" column="40" selection-start-line="34" selection-start-column="40" selection-end-line="34" selection-end-column="40" />
+        <state relative-caret-position="377">
+          <caret line="60" column="14" selection-start-line="60" selection-start-column="14" selection-end-line="60" selection-end-column="14" />
           <folding>
             <element signature="e#0#34#0" expanded="true" />
           </folding>
