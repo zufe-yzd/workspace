@@ -1,5 +1,98 @@
 // 监控区域
 {
+	d3.select("#map").append("svg").attr("width","100%").attr("height","100%").attr("id","mapbox").style("position","relative").style("top","-350px");
+	var show = null;
+
+	function showZone(num) {
+		if (num == -1) {
+			try {
+				show.remove();
+			} catch (error) {}
+			show = null;
+			return;
+		}
+		else {
+			var x1 = 0, x2 = 0, y1 = 0, y2 = 0;
+			switch (parseInt(num)) {
+				case 0:
+					x1 = 6;
+					x2 = 62;
+					y1 = 216;
+					y2 = 308;
+					break;
+				case 1:
+					x1 = 48;
+					x2 = 100;
+					y1 = 134;
+					y2 = 216;
+					break;
+				case 2:
+					x1 = 82;
+					x2 = 114;
+					y1 = 90;
+					y2 = 134;
+					break;
+				case 3:
+					x1 = 98;
+					x2 = 136;
+					y1 = 2;
+					y2 = 90;
+					break;
+				case 4:
+					x1 = 136;
+					x2 = 196;
+					y1 = 12;
+					y2 = 32;
+					break;
+				case 5:
+					x1 = 196;
+					x2 = 232;
+					y1 = 12;
+					y2 = 32;
+					break;
+				case 6:
+					x1 = 136;
+					x2 = 182;
+					y1 = 62;
+					y2 = 86;
+					break;
+				case 7:
+					x1 = 182;
+					x2 = 232;
+					y1 = 62;
+					y2 = 86;
+					break;
+				case 8:
+					x1 = 232;
+					x2 = 262;
+					y1 = 12;
+					y2 = 86;
+					break;
+				case 9:
+					x1 = 0;
+					x2 = 10;
+					y1 = 0;
+					y2 = 10;
+					break;
+				case 10:
+					x1 = 0;
+					x2 = 10;
+					y1 = 0;
+					y2 = 10;
+					break;
+			}
+			show = d3.select("#mapbox")
+					.append("rect")
+					.attr("x",x1)
+					.attr("y",y1)
+					.attr("width",x2-x1)
+					.attr("height",y2-y1)
+					.attr("fill-opacity",0)
+					.attr("stroke","#FFAA00")
+					.attr("stroke-width","4px");
+		}
+	}
+
 	$.getJSON("/data/zones.json",function(dataset){
 		var width = 322;
 		var height = 110;
@@ -17,10 +110,12 @@
 						.on("mouseover",function() {
 							d3.select("#line"+d3.select(this).attr("id").substring(3,d3.select(this).attr("id").length)).style("color","LawnGreen");
 							d3.select(this).select("rect").attr("fill","black");
+							showZone(d3.select(this).attr("id").substring(3,d3.select(this).attr("id").length));
 						})
 						.on("mouseout",function() {
 							d3.select("#line"+d3.select(this).attr("id").substring(3,d3.select(this).attr("id").length)).style("color","white");
 							d3.select(this).select("rect").attr("fill","#262626");
+							showZone(-1);
 						});
 
 

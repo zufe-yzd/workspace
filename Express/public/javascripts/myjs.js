@@ -628,6 +628,50 @@
 	}
 }
 
+// 极坐标系柱形图
+{
+	var mychart = echarts.init(document.getElementById('rchart1'));
+	var dataset =  [1.3083, 1.0833, 0.8888, 0.5638, 0.2305, 0.6305, 0.9361, 4.3555, 10.0472, 12.1027, 13.8666, 22.1500, 24.9694, 32.2611, 39.3722, 61.7166, 106.7416, 166.0305, 225.9500, 94.7194, 38.2055, 37.9055, 24.8777, 36.7805];
+	var option = {
+		angleAxis: {
+			type: 'category',
+			data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24],
+			z: 10
+		},
+		radiusAxis: {
+		},
+		polar: {
+		},
+		series: [{
+			type: 'bar',
+			data: dataset,
+			coordinateSystem: 'polar',
+			name: '圆环',
+			stack: 'a',
+			itemStyle: {
+				normal: {
+					color: function(params) {
+						var colorlist = ['#BBFFEE','#CCFF99','#BBFF66','#66FF66','#99FF33','#99DD00','#66DD00','#88AA00','#55AA00','#668800','#FFBB00','#DDAA00','#FFAA33','#FF8800','#E63F00','#FF0000','#CC0000','#AA0000','#880000','#FF3333','#FF5511','#FFBB00','#FFCC22','#FFFF77',];
+						return colorlist[params.dataIndex];
+					}
+				}
+			}
+		}],
+		legend: {
+			show: true,
+			data: ['A', 'B', 'C']
+		},
+		tooltip:{
+			formatter: function(data){
+				var a = dataset;
+				return a[data.dataIndex];
+				console.log(data)
+			}
+		}
+	};
+	mychart.setOption(option);
+}
+
 // 不知道用不用得上但是不敢删的东西
 {
 	 // $.getJSON("/data/orderOUT.json",function(data){
