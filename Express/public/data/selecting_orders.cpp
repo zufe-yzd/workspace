@@ -3,9 +3,38 @@
 #include<vector>
 using namespace std;
 
-const int ALL = 49103;
-int CONTAINED = 0;
-int DONE = -1;
+struct GPS {
+	string time;
+	double x;
+	double y;
+};
+
+class Order {
+	public:
+		string id;
+		vector<GPS> data;
+		string kind;
+		void setID(string id) {
+			this->id = id;
+			this->kind = "not";
+		}
+		void load(string time, double x, double y) {
+			GPS gps;
+			gps.time = time;
+			gps.x = x;
+			gps.y = y;
+			this->data.push_back(gps);
+		}
+};
+
+double parseTime(string str) {
+	int value = 0;
+	for (size_t i = 0; i < str.size(); i++) {
+		value *= 10;
+		value += str[i] - '0';
+	}
+	return value - 1525104000;
+}
 
 double parseDouble(string str) {
 	double value = 0;
@@ -23,49 +52,17 @@ double parseDouble(string str) {
 	}
 	while (onflo-->0)
 		value = value * 0.100000;
-	return value;// - 1525104000;
+	return value;
 }
 
-struct GPS {
-	double time;
-	double x;
-	double y;
-};
-
-class Order {
-	public:
-		string id;
-		bool isContained;
-		vector<GPS> data;
-		void setID(string id) {
-			this->id = id;
-			this->isContained = false;
-		}
-		void load(string time, string x, string y) {
-			if (this->isContained==false) {
-				GPS gps;
-				gps.time = parseDouble(time);
-				gps.x = parseDouble(x);
-				gps.y = parseDouble(y);
-				//cout << gps.x << "," << gps.y << endl;
-				//system("pause");
-				if (gps.x >= 104.0177 && gps.x-0.005 <= 104.0635 && gps.y+0.005 >= 30.4458 && gps.y <= 30.4857) {
-					this->isContained = true;
-					CONTAINED++;
-					if (CONTAINED%50==0)
-						cout << "CONTAINED = " << CONTAINED << endl;
-				}
-			}
-			//this->data.push_back(gps);
-		}
-};
-
+const int ALL = 49103;
+int DONE = -1;
 
 int main() {
 	Order *orders = new Order[50000];
 	string data = "";
 	ifstream file;
-	file.open("gps-20180501.txt");
+	file.open("../../../../data/gps-20180501.txt");
 	if (!file.is_open()) {
 		cerr << "Can't open this file. ";
 		
@@ -93,15 +90,19 @@ int main() {
 						DONE++;
 						i = DONE;
 						orders[i].id = newId;
-						if (DONE%100==0)
-							cout << "PROCESS: " << DONE << " / " << ALL << endl;
+						cout << "READ: " << DONE << " / " << ALL << endl;
 					}
 					_id = newId;
-					if (i!=-1 && orders[i].isContained)
-						break;
-					if (_time!="" && _x!="" && _y!="")
-						orders[i].load(_time,_x,_y);
-					break;	
+					if (_time!="" && _x!="" && _y!="") {
+						double cx = parseDouble(_x);
+						double cy = parseDouble(_y);
+						if (cx >= 104.0066+0.0025
+								&& cx <= 104.0590+0.0025
+								&& cy >= 30.4419-0.0025 
+								&& cy <= 30.4861-0.0025)
+							orders[i].kind = "pass-by";
+					}
+					break;
 				case 1:
 					_time = data;
 					break;
@@ -116,20 +117,34 @@ int main() {
 			pos = pos<3 ? pos+1 : 0;
 		}
 		else
-			data += ch;
+		data += ch;
 	} while (!file.eof());
 	file.close();
 	
 	ofstream offile;
-	offile.open("orders_contained.json");
+	offile.open("selected.json");
 	offile << "[";
 	for (int i=0;i<ALL;i++) {
-		if (orders[i].isContained)
-			offile << ",\n\"" << orders[i].id << "\"";
-		if (i%100==0)
-			cout << "WRITTEN IN " << i+1 << " / " << CONTAINED << endl;
+		double cx = orders[i].data[0].x;
+		double cy = orders[i].data[0].y;
+		if (cx >= 104.0066+0.0025
+				&& cx <= 104.0590+0.0025
+				&& cy >= 30.4419-0.0025 
+				&& cy <= 30.4861-0.0025)
+			orders[i].kind = "from";
+		cx = orders[i].data[orders[i].data.size()-1].x;
+		cy = orders[i].data[orders[i].data.size()-1].y;
+		if (cx >= 104.0066+0.0025
+				&& cx <= 104.0590+0.0025
+				&& cy >= 30.4419-0.0025 
+				&& cy <= 30.4861-0.0025)
+			orders[i].kind = "to";
+		offile << "{\"id\":\"" << orders[i].id << "\",\"kind\":\"" << orders[i].kind << "\"}";
+		if (i<ALL-1)
+			offile << "," << endl;
+		cout << "MARKED DOWN " << i+1 << " / " << ALL << endl;
 	}
-	offile << "]";
+	offile << "]" << endl;
 	offile.close();
 	
 	delete orders;
