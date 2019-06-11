@@ -1,0 +1,69 @@
+<%- include header %>
+监控
+<%- include import %>
+	<li><a href="/login">外围</a></li>
+	<li class="active"><a href="#">监控</a></li>
+	<li><a href="/page3">全局</a></li>
+	<li><a href="#">统计</a></li>
+<%- include left %>
+
+<div class="col-xs-9 col-sm-9" style="height:620px; margin-left: 24px;">
+	<div class="row" style="height:350px;">
+		<div class="col-xs-4 col-sm-4" style="height:350px;">
+			<div class="piece col-xs-12 col-sm-12" id="map" style="padding: 0px;">
+				<image src="/images/map.png" width=322 height=350></image>
+			</div>
+		</div>
+		<div class="col-xs-1 col-sm-1" style="height:350px; margin-left: -18px;">
+			<div class="piece col-xs-12 col-sm-12" id="control">
+			</div>
+		</div>
+		<div class="col-xs-7 col-sm-7" style="height:350px; margin-left: -18px;">
+			<div class="piece col-xs-12 col-sm-12" id="table">
+			</div>
+		</div>
+	</div>
+	<div class="row" style="height:110px; margin-top: 10px;">
+		<div class="col-xs-4 col-sm-4" style="height:110px;">
+			<div class="piece col-xs-12 col-sm-12" id="zone1"></div>
+		</div>
+		<div class="col-xs-4 col-sm-4" style="height:110px; margin-left: -18px;">
+			<div class="piece col-xs-12 col-sm-12" id="zone2"></div>
+		</div>
+		<div class="col-xs-4 col-sm-4" style="height:110px; margin-left: -18px;">
+			<div class="piece col-xs-12 col-sm-12" id="zone3"></div>
+		</div>
+	</div>
+	<div class="row" style="height:110px; margin-top: 10px;">
+		<div class="col-xs-4 col-sm-4" style="height:110px;">
+			<div class="piece col-xs-12 col-sm-12" id="zone4"></div>
+		</div>
+		<div class="col-xs-4 col-sm-4" style="height:110px; margin-left: -18px;">
+			<div class="piece col-xs-12 col-sm-12" id="zone5"></div>
+		</div>
+		<div class="col-xs-4 col-sm-4" style="height:110px; margin-left: -18px;">
+			<div class="piece col-xs-12 col-sm-12" id="zone6"></div>
+		</div>
+	</div>
+</div>
+<div class="col-xs-3 col-sm-3" style="height:620px; margin-left: -40px;">
+	<div class="row" style="height:110px;">
+		<div class="piece col-xs-11 col-sm-11" id="zone7"></div>
+	</div>
+	<div class="row" style="height:110px; margin-top: 10px;">
+		<div class="piece col-xs-11 col-sm-11" id="zone8"></div>
+	</div>
+	<div class="row" style="height:110px; margin-top: 10px;">
+		<div class="piece col-xs-11 col-sm-11" id="zone9"></div>
+	</div>
+	<div class="row" style="height:110px; margin-top: 10px;">
+		<div class="piece col-xs-11 col-sm-11" id="zone10"></div>
+	</div>
+	<div class="row" style="height:110px; margin-top: 10px;">
+		<div class="piece col-xs-11 col-sm-11" id="zone11"></div>
+	</div>
+</div>
+
+<%- include footer %>
+<script src="javascripts/cyx.js"></script>
+<%- include after %>

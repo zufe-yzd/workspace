@@ -119,7 +119,7 @@ int main() {
 	}
 	string data = "";
 	ifstream file;
-	file.open("gps-20180501.txt");
+	file.open("../../../../data/gps-20180501.txt");
 	if (!file.is_open()) {
 		cerr << "Can't open this file. ";
 		
@@ -160,10 +160,10 @@ int main() {
 								&& cy <= 30.4590-0.0025)
 							orders[i].load(1,_time,cx,cy);
 						// zone 2
-						else if (cx >= 104.0084+0.0025
-								&& cx <= 104.0184+0.0025
-								&& cy >= 30.4468-0.0025 
-								&& cy <= 30.4590-0.0025)
+						else if (cx >= 104.0150+0.0025
+								&& cx <= 104.0256+0.0025
+								&& cy >= 30.4590-0.0025 
+								&& cy <= 30.4706-0.0025)
 							orders[i].load(2,_time,cx,cy);
 						// zone 3
 						else if (cx >= 104.0232+0.0025
