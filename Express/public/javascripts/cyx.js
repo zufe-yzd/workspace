@@ -3,6 +3,7 @@
 	d3.select("#map").append("svg").attr("width","100%").attr("height","100%").attr("id","mapbox").style("position","relative").style("top","-350px");
 	var show = null;
 
+
 	function showZone(num) {
 		if (num == -1) {
 			try {
@@ -69,16 +70,16 @@
 					y2 = 86;
 					break;
 				case 9:
-					x1 = 0;
-					x2 = 10;
-					y1 = 0;
-					y2 = 10;
+					x1 = 120;
+					x2 = 180;
+					y1 = 180;
+					y2 = 206;
 					break;
 				case 10:
-					x1 = 0;
-					x2 = 10;
-					y1 = 0;
-					y2 = 10;
+					x1 = 140;
+					x2 = 220;
+					y1 = 260;
+					y2 = 290;
 					break;
 			}
 			show = d3.select("#mapbox")
@@ -92,6 +93,7 @@
 					.attr("stroke-width","4px");
 		}
 	}
+
 
 	$.getJSON("/data/zones.json",function(dataset){
 		var width = 322;
@@ -191,7 +193,7 @@
 			}
 
 			d3.select("#ti"+z+"c").text(parseInt(maxCount+0.5));
-			d3.select("#ti"+z+"d").text(parseInt(averCount+0.5) + " ρ½辆");
+			d3.select("#ti"+z+"d").text(parseInt(averCount+0.5) + " 辆");
 			d3.select("#ti"+z+"e").text(parseInt(averSpeed*100+0.5)/100 + " m/s");
 
 			// 还原零点
@@ -260,7 +262,7 @@
 						})
 						.attr("transform","translate(-322,0)");
 
-			tip.text(parseInt(Math.sqrt(parseInt(tip.text())*maxCount)) + " ρ½辆");
+			tip.text(parseInt(Math.sqrt(parseInt(tip.text())*maxCount)) + " 辆");
 
 			// 建立数组
 			var status = [];
@@ -402,23 +404,25 @@
 	var tablehead_ti = tipBox.append("tr").style("font-size","12px");
 	tablehead_ti.append("th").style("width","40px").text("id");
 	tablehead_ti.append("th").style("width","220px").text("位置");
-	tablehead_ti.append("th").style("font-size","10px").style("width","80px").text("车辆承载量");
-	tablehead_ti.append("th").style("font-size","10px").style("width","90px").text("平均实时流量");
-	tablehead_ti.append("th").style("font-size","10px").style("width","80px").text("自由行车速度");
+	tablehead_ti.append("th").style("font-size","10px").style("width","85px").text("车辆承载量");
+	tablehead_ti.append("th").style("font-size","10px").style("width","100px").text("平均实时流量");
+	tablehead_ti.append("th").style("font-size","10px").style("width","100px").text("自由行车速度");
 	tablehead_ti.append("th").style("width","160px").text("拥堵时段");
 
 	for (var i = 0; i < 11; i++) {
 		var tablecontent_ti = tipBox.append("tr").attr("id","line"+i).style("font-size","12px").style("line-height","16.4px")
 						.on("mouseover",function() {
-							d3.select("#zone"+(parseInt(d3.select(this).attr("id").substring(4,d3.select(this).attr("id").length))+1))
+							d3.select("#line"+(parseInt(d3.select(this).attr("id").substring(4,d3.select(this).attr("id").length))+1))
 										.select("rect").attr("fill","black");
 							d3.select(this).style("color","LawnGreen");
-						})
+							showZone(d3.select(this).attr("id").substring(4,d3.select(this).attr("id").length))
+						})			
 						.on("mouseout",function() {
-							d3.select("#zone"+(parseInt(d3.select(this).attr("id").substring(4,d3.select(this).attr("id").length))+1))
+							d3.select("#line"+(parseInt(d3.select(this).attr("id").substring(4,d3.select(this).attr("id").length))+1))
 										.select("rect").attr("fill","#262626");
 							d3.select(this).style("color","white");
-						});;
+							showZone(-1);
+						});
 		tablecontent_ti.append("td").attr("id","ti"+i+"a").text(i+1);
 		tablecontent_ti.append("td").attr("id","ti"+i+"b").text(" ? ");
 		tablecontent_ti.append("td").attr("id","ti"+i+"c").text("0");

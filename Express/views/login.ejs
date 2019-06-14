@@ -7,29 +7,48 @@
 	<li><a href="#">统计</a></li>
 <%- include left %>
 
-<div class="col-xs-4 col-sm-4" style="height:590px;">
-	<div class="row" style="height:165px;">
-		<div class="piece col-xs-11 col-sm-11 col-md-offset-1" id="chart3"></div>
+<div class="col-xs-8 col-sm-8" style="height:300px;">
+	<div class="row" style="height:300px;">
+		<div class="col-xs-6 col-sm-6" style="height:300px;">
+			<div class="row" style="height:125px;">
+				<div class="piece col-xs-11 col-sm-11 col-md-offset-1" id="chart1"></div>
+			</div>
+			<div class="row" style="height:160px; margin-top: 15px;">
+				<div class="piece col-xs-11 col-sm-11 col-md-offset-1" id="chart2"></div>
+			</div>
+		</div>
+		<div class="col-xs-4 col-sm-4" style="height:300px;">
+			<div class="piece col-xs-12 col-sm-12" id="map" style="height: 300px;">
+			</div>
+		</div>
+		<div class="col-xs-2 col-sm-2" style="height:300px;">
+			<div class="row" style="height: 145px;">
+				<div class="piece col-xs-12 col-sm-12" id="pic" style="height: 145px;">
+				</div>
+			</div>
+			<div class="row" style="height: 140px;">
+				<div class="piece col-xs-12 col-sm-12" id="chart3" style="height: 140px; margin-top: 15px;">
+				</div>
+			</div>
+		</div>
 	</div>
-	<div class="row" style="height:205px; margin-top: 15px;">
-		<div class="piece col-xs-11 col-sm-11 col-md-offset-1" id="chart2"></div>
-	</div>
-	<div class="row" style="height:190px; margin-top: 15px;">
-		<div class="piece col-xs-11 col-sm-11 col-md-offset-1" id="chart1"></div>
+	<div class="row" style="height:275px; margin-top: 15px;">
+		<div class="col-xs-12 col-sm-12" style="height:275px;">
+			<div class="row" style="height:275px;">
+				<div class="piece" id="rchart1" style="float: left; width: 250px; margin-left: 39px;"></div>
+				<div class="piece" id="rchart2" style="float: left; width: 634px; margin-left: 15px;"></div>
+			</div>
+		</div>
 	</div>
 </div>
-<div class="col-xs-5 col-sm-5" style="height:590px;">
-	<div class="piece col-xs-12 col-sm-12" id="map" style="height: 590px;">
+<div class="col-xs-4 col-sm-4" style="height:590px; margin-left: -30px;">
+	<div class="row" style="height:420px; margin-left: 30px;">
+		<div class="col-xs-12 col-sm-12" style="height:420px;">
+			<div class="piece" id="map0"></div>
+		</div>
 	</div>
 </div>
-<div class="col-xs-3 col-sm-3" style="height:590px; margin-left: -30px;">
-	<div class="row" style="height:330px;">
-		<div class="piece col-xs-11 col-sm-11 col-md-offset-1" id="rchart1"></div>
-	</div>
-	<div class="row" style="height:245px; margin-top: 15px;">
-		<div class="piece col-xs-11 col-sm-11 col-md-offset-1" id="rchart2"></div>
-	</div>
-</div>
+
 
 <%- include footer %>
 <script src="javascripts/myjs.js"></script>

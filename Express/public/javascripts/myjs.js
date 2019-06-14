@@ -55,6 +55,11 @@
 	var selected = 5400;
 	var hour = 15, minute = 0, second = 0;
 
+	d3.select("#pic")
+		.style("padding","0px")
+		.append("img")
+		.attr("src","/images/small.jpg");
+
 	var tipBox = d3.select("#chart2")
 		.append("table")
 		.attr("border","0")
@@ -83,18 +88,19 @@
 	tablecontent.append("td").attr("id","speed").text("no record");
 
 	var box3 = d3.select("#chart3").append("div")
-				.style("margin","20px");
+				.style("margin","12px 0px");
 
 	box3.append("button")
 			.attr("type","button")
 			.attr("class","btn btn-default")
 			.html("自动播放")
+			.style("margin","0px 18px")
 			.attr("onclick","play()");
 	box3.append("hr");
 	box3.append("div")
 					.html('<p>最大热度：\t<prep id="label1">8</prep></p>\
 							<button type="button" class="btn btn-default smallbtn" id="adj1L" style="float: left;">-</button>\
-							<div id="progress1" class="progress" style="width: 120px; float: left; margin: 0px 6px;">\
+							<div id="progress1" class="progress" style="width: 78px; float: left; margin: 0px 4px;">\
 								<div id="strip1" class="progress-bar" role="progressbar" aria-valuenow="60" \
 									aria-valuemin="0" aria-valuemax="100" style="width: 66.67%;">\
 								</div>\
@@ -141,7 +147,7 @@
 // 小图
 {
 	var width = 400;
-	var height = 167;
+	var height = 102;
 
 	var svg = d3.select("#chart1")
 				.style("overflow","hidden")
@@ -365,8 +371,6 @@
 				d3.select("#time").text(hour+":"+minute+":"+second);
 				d3.select("#count").text(data[selected]["count"]);
 				d3.select("#speed").text(parseInt(speeddata[selected]["speed"]*10)/10 + "m/s");
-				// d3.select("#float1").attr("cy",padding.top+yScale(data[selected]["count"]));
-				// d3.select("#float2").attr("cy",padding.top+yScale_s(speeddata[selected]["speed"]));
 				if (data[selected]["count"]<=0) {
 					d3.select("#speed").text("no record");
 					d3.select("#speed").style("color","grey");
@@ -387,30 +391,12 @@
 			});
 
 	var lab = svg.append("polygon")
-				.attr("points",(width/2)+",140 "+(width/2)+","+padding.top)
+				.attr("points",(width/2)+",76 "+(width/2)+","+padding.top)
 				.attr("style","fill: green; stroke: LawnGreen; stroke-width: 1");
 
 	var pointer = svg.append("polygon")
-				.attr("points",(width/2)+",142 "+(width/2-8)+",157 "+(width/2+8)+",157")
-				.attr("style","fill: LawnGreen; stroke: green; stroke-width: 2");
-
-	// var float1 = svg.append("circle")
-	// 			.attr("id","float1")
-	// 			.attr("cx",width/2)
-	// 			.attr("cy",padding.top+yScale(data[5400]["count"]))
-	// 			.attr("r",4)
-	// 			.attr("fill","red")
-	// 			.attr("stroke","white")
-	// 			.attr("stroke-width",1);
-
-	// var float2 = svg.append("circle")
-	// 			.attr("id","float2")
-	// 			.attr("cx",width/2)
-	// 			.attr("cy",padding.top+yScale_s(speeddata[5400]["speed"]))
-	// 			.attr("r",4)
-	// 			.attr("fill","LawnGreen")
-	// 			.attr("stroke","black")
-	// 			.attr("stroke-width",2);
+				.attr("points",(width/2)+",78 "+(width/2-8)+",93 "+(width/2+8)+",93")
+				.attr("style","fill: green; stroke: LawnGreen; stroke-width: 2");
 }
 
 // 热力图
@@ -425,7 +411,7 @@
 	}
 	var map1 = new L.Map('map', {
 				center: new L.LatLng(30.4620+0.0025, 104.0353-0.0020),//(30.4594579639, 104.0357266458),
-				zoom: 14,
+				zoom: 13,
 			});
 
 	$.getJSON("/data/gps_by_time_match.json",function(dataset){
@@ -468,8 +454,8 @@
 		var baseLayer = L.tileLayer(
 				'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
 				attribution: '...',
-				maxZoom: 15,
-				minZoom: 14
+				maxZoom: 13,
+				minZoom: 13
 				}
 			).addTo(map1);
 
@@ -499,8 +485,8 @@
 		var baseLayer = L.tileLayer(
 				'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
 				attribution: '...',
-				maxZoom: 15,
-				minZoom: 14
+				maxZoom: 13,
+				minZoom: 13
 				}
 			).addTo(map1);
 
@@ -665,262 +651,565 @@
 			formatter: function(data){
 				var a = dataset;
 				return a[data.dataIndex];
-				console.log(data)
 			}
 		}
 	};
 	mychart.setOption(option);
 }
 
-// 不知道用不用得上但是不敢删的东西
+// 极坐标系柱状图
 {
-	 // $.getJSON("/data/orderOUT.json",function(data){
-	 //    //console.log(data)
-		// var getOn = []
-	 // 	var getOff = []
-	 // 	var dataset = []
-	 // 	var lng1 = []
-	 // 	var lat1= []
-	 // 	var begin = []
-	 // 	var end = []
-	 // 	var lng2 = []
-	 // 	var lat2 = []
+	var timeData = [];
+	for(var i = 0 ; i < _data.length; i++){
+		timeData.push(_data[i]["time"]);
+	}
 
-	 // 	console.log(data[0])
+	var data_ = [];
+	for(var i = 0 ; i < _data.length; i++){
+		data_.push(_data[i]["count"]);
+	}
 
-	 // 	for (var i = 0; i < data.length; i++){
-	 // 	   	getOn.push({"getOnCoordinate":data[i]["getOnCoordinate"],"value":1})
-	 // 	   	getOff.push({"getOffCoordinate":data[i]["getOffCoordinate"]})
-	 // 	   	dataset.push(data[i])
-	 // 	   	lat1.push(data[i]["getOnCoordinate"][1]+0.0025)
-	 // 	   	lng1.push(data[i]["getOnCoordinate"][0]-0.0025)
-	 // 	   	lat2.push(data[i]["getOffCoordinate"][1]+0.0025)
-	 // 	   	lng2.push(data[i]["getOffCoordinate"][0]-0.0025) 
-	 // 	   	begin.push({"lat":data[i]["getOnCoordinate"][1]+0.0025,"lng":data[i]["getOnCoordinate"][0]-0.0025,"count":1});
-	 // 	   	end.push({"lat":data[i]["getOffCoordinate"][1]+0.0025,"lng":data[i]["getOffCoordinate"][0]-0.0025,"count":1});
-	 // 	}
+	var speeddata_ = [];
+	for(var i = 0 ; i < speeddata.length; i++){
+		speeddata_.push(speeddata[i]["speed"]);
+	}
 
-	 // 	// console.log(begin)
-	 // 	console.log
+	var myChart = echarts.init(document.getElementById('rchart2'),'dark');
+	option = {
+		title: {
+			text: '流量 - 速度演变图',
+			x: 'center'
+		},
+		tooltip: {
+			trigger: 'axis',
+			axisPointer: {
+				animation: false
+			}
+		},
+		legend: {
+			data:['流量','速度'],
+			x: 'left'
+		},
+		axisPointer: {
+			link: {xAxisIndex: 'all'}
+		},
+		dataZoom: [{
+				show: true,
+				realtime: true,
+				start: 30,
+				end: 70,
+				xAxisIndex: [0, 1]
+			}, {
+				type: 'inside',
+				realtime: true,
+				start: 30,
+				end: 70,
+				xAxisIndex: [0, 1]
+			}
+		],
+		grid: [{
+				left: 50,
+				right: 50,
+				height: '35%'
+			}, {
+				left: 50,
+				right: 50,
+				top: '55%',
+				height: '35%'
+		}],
+		xAxis : [{
+				type : 'category',
+				boundaryGap : false,
+				axisLine: {onZero: true},
+				data: timeData
+			}, {
+				gridIndex: 1,
+				type : 'category',
+				boundaryGap : false,
+				axisLine: {onZero: true},
+				data: timeData,
+				position: 'top'
+			}
+		],
+		yAxis : [{
+				name : '流量(辆)',
+				type : 'value',
+				max : 500
+			}, {
+				gridIndex: 1,
+				name : '速度(m/s)',
+				type : 'value',
+				inverse: true
+			}
+		],
+		series : [{
+				name:'流量',
+				type:'line',
+				symbolSize: 8,
+				hoverAnimation: false,
+				data:data_
+			}, {
+				name:'速度',
+				type:'line',
+				xAxisIndex: 1,
+				yAxisIndex: 1,
+				symbolSize: 8,
+				hoverAnimation: false,
+				data:speeddata_
+			}
+		]
+	};
+	myChart.setOption(option);
+}
 
-	 // 	var min1 = d3.min(lat1);
-	 // 	var max1 = d3.max(lat1);
-	 // 	var max2 = d3.max(lng1);
-	 // 	var max3 = d3.max(lat2)
-	 // 	var max4 = d3.max(lng2)
-	 // 	var min2 = d3.min(lng1);
-	 // 	var min3 = d3.min(lat1);
-	 // 	var min4 = d3.min(lng2);
-	 // 	console.log(min1,min2,max1,max2,min3,min4,max3,max4)
-	 // 	var lat1Scale = d3.scaleBand().domain([min1,max1]).range([0,130])
-	 // 	var lat1s = []
-	 // 	for(var i = 0; i < lat1.length ;i++){
-	 // 		lat1s[i]=lat1Scale(lat1[i])
-	 // 	}
+// 监控区域
+{
+	d3.select("body").append("svg")
+					.attr("width","100%").attr("height","100%").attr("id","mapbox").style("position","absolute").style("visibility","hidden");
 
-	 // 	var min2 = d3.min(lat2);
-	 // 	var max1 = d3.max(lat1);
-	 // 	var lat1Scale = d3.scaleBand().domain([min1,max1]).range([0,130])
-	 // 	var lat1s = []
-	 // 	for(var i = 0; i < lat1.length ;i++){
-	 // 		lat1s[i]=lat1Scale(lat1[i])
-	 // 	}
-	 	// console.log(lat1s)
+	var tipBox = d3.select("body")
+		.append("div")
+		.attr("id","#table")
+		.style("position","absolute")
+		.style("visibility","hidden")
+		.append("table");
 
-	//   $(function() {
-	//                 // //实例化对象
-	//                 // var map = new L.Map("map");
-	//                 // //设置地图视图（地理中心和缩放）
-	//                 // map.setView([30.4594579639, 104.0357266458], 12);
+	var tablehead_ti = tipBox.append("tr").style("font-size","12px");
+	tablehead_ti.append("th").style("width","40px").text("id");
+	tablehead_ti.append("th").style("width","220px").text("位置");
+	tablehead_ti.append("th").style("font-size","10px").style("width","80px").text("车辆承载量");
+	tablehead_ti.append("th").style("font-size","10px").style("width","90px").text("平均实时流量");
+	tablehead_ti.append("th").style("font-size","10px").style("width","80px").text("自由行车速度");
+	tablehead_ti.append("th").style("width","160px").text("拥堵时段");
 
-	//                 // //地图地址
-	//                 // var url = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
-	//                 // var attr = ' Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>';
+	for (var i = 0; i < 11; i++) {
+		var tablecontent_ti = tipBox.append("tr").attr("id","line"+i).style("font-size","12px").style("line-height","16.4px")
+						.on("mouseover",function() {
+							d3.select("#zone"+(parseInt(d3.select(this).attr("id").substring(4,d3.select(this).attr("id").length))+1))
+										.select("rect").attr("fill","black");
+							d3.select(this).style("color","LawnGreen");
+						})
+						.on("mouseout",function() {
+							d3.select("#zone"+(parseInt(d3.select(this).attr("id").substring(4,d3.select(this).attr("id").length))+1))
+										.select("rect").attr("fill","#262626");
+							d3.select(this).style("color","white");
+						});;
+		tablecontent_ti.append("td").attr("id","ti"+i+"a").text(i+1);
+		tablecontent_ti.append("td").attr("id","ti"+i+"b").text(" ? ");
+		tablecontent_ti.append("td").attr("id","ti"+i+"c").text("0");
+		tablecontent_ti.append("td").attr("id","ti"+i+"d").text("0");
+		tablecontent_ti.append("td").attr("id","ti"+i+"e").text("no record");
+		tablecontent_ti.append("td").attr("id","ti"+i+"f").text(" - ");
+		tablecontent_ti.selectAll("td")
+					.style("background-color",function() {
+						return i % 2 == 0 ? "#222222" : "#555555";
+					})
+					.style("padding","4.51px 6px");
+	}
 
-	//                 // //图层
-	//                 // L.tileLayer(url, {
-	//                 //     maxZoom: 18,
-	//                 //     attribution: attr,
-	//                 //     id: 'mapbox.streets'
-	//                 // }).addTo(map);
+	d3.select("#ti0b").text("剑南大道与武汉路交叉口");
+	d3.select("#ti1b").text("剑南大道南一段南端");
+	d3.select("#ti2b").text("剑南大道与沈阳路交叉口");
+	d3.select("#ti3b").text("剑南大道南一段北端");
+	d3.select("#ti4b").text("祥鹤四街西段");
+	d3.select("#ti5b").text("祥鹤四街东段");
+	d3.select("#ti6b").text("沈阳路西段优品道锦绣附近");
+	d3.select("#ti7b").text("沈阳路西段天府四中附近");
+	d3.select("#ti8b").text("沿河道路北段");
+	d3.select("#ti9b").text("龙马路东段");
+	d3.select("#ti10b").text("武汉路西段东端");
 
-	//                 // // //圆心
-	//                 // // var circle = L.circle([30.466655, 104.040847], {
-	//                 // //     color: 'red', //边框颜色
-	//                 // //     fillColor: '#f03', //填充颜色
-	//                 // //     fillOpacity: 0.2, //透明度
-	//                 // //     radius: 200000 //半径 米
-	//                 // // }).addTo(map);
+	var zones = [];
 
-	//                 // // //多边形
-	//                 // // var polygon = L.polygon([
-	//                 // //     [31.844248, 117.232868],
-	//                 // //     [30.586032, 114.32653],
-	//                 // //     [28.235398, 112.956396]
-	//                 // // ]).addTo(map);
-
-	                
-
-	//                 // // L.marker([39.921108, 116.395562]).addTo(map).bindPopup("<b>北京!</b><br />直辖市.");
-	//                 // // L.marker([39.120097, 117.206074]).addTo(map).bindPopup("<b>天津市!</b><br />直辖市.");
-	//                 // // L.marker([31.233953, 121.460992]).addTo(map).bindPopup("<b>上海市!</b><br />直辖市.");
-	//                 // // L.marker([29.573519, 106.545211]).addTo(map).bindPopup("<b>重庆市!</b><br />直辖市.");
-	                
-	                
-	//                 // // //可拖拽的标识
-	//                 // // var marker = L.marker([30, 118], {
-	//                 // //         draggable: true, // 使图标可拖拽
-	//                 // //         title: 'Text', // 添加一个标题
-	//                 // //         opacity: 0.5 // 设置透明度
-	//                 // //     })
-	//                 // //     .addTo(map)
-	//                 // //     .bindPopup("<b>中国</b><br>安徽黄山.")
-	//                 // //     .openPopup();
-	                
-	//                 // // var orangeUrl = "http://leafletjs.com/examples/custom-icons/leaf-orange.png";
-	//                 // // var redUrl = "http://leafletjs.com/examples/custom-icons/leaf-red.png";
-	//                 // // var greenUrl = "http://leafletjs.com/examples/custom-icons/leaf-green.png";
-
-	                
-	//                 // // var redIcon = new LeafIcon({
-	//                 // //     iconUrl: redUrl //图标图像
-	//                 // // });
-
-
-	//                 // // 弹出面板
-	//                 // // 绑定一个弹出标记点击并打开它
-	//                 // var popup = L.popup();
-	//                 // popup.setLatLng([30.4594579639, 104.0357266458]);
-	//                 // popup.setContent("<b>顾拜旦现代五项赛事中心</b>");
-	//                 // // popup.openOn(map);
-	//                 // // var popup2 = L.popup().setLatLng([25.051612, 121.531195]).setContent("<b>台北市!</b><br />台北.").openOn(map);
-
-	//                 // //添加点击事件
-	//                 // function onMapClick(e) {
-	//                 //     popup
-	//                 //         .setLatLng(e.latlng)
-	//                 //         .setContent("点击坐标： " + e.latlng.toString())
-	//                 //         .openOn(map);
-	//                 // }
-
-	//                 // map.on('click', onMapClick);
-	//                 // 
-	// //******************************************起点热力图***********************************************************//
-	// //**********************************************************************************************************************//
-	// //**********************************************************************************************************************//
-	  //       var testData = {
-			// 		max: 1,
-			// 		data: begin
-			// 	};        
-
-			// var baseLayer = L.tileLayer(
-			// 		'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-			// 		attribution: '...',
-			// 		maxZoom: 20
-			// 		}
-			// 	);
-			// var cfg = {
-			// 		// radius should be small ONLY if scaleRadius is true (or small radius is intended)
-			// 		// if scaleRadius is false it will be the constant radius used in pixels
-			// 		"radius": 4,
-			// 		"maxOpacity": .8, 
-			// 		// scales the radius based on map zoom
-			// 		"scaleRadius": false, 
-			// 		// if set to false the heatmap uses the global maximum for colorization
-			// 		// if activated: uses the data maximum within the current map boundaries 
-			// 		//   (there will always be a red spot with useLocalExtremas true)
-			// 		"useLocalExtrema": true,
-			// 		// which field name in your data represents the latitude - default "lat"
-			// 		latField: 'lat',
-			// 		// which field name in your data represents the longitude - default "lng"
-			// 		lngField: 'lng',
-			// 		// which field name in your data represents the data value - default "value"
-			// 		valueField: 'count'
-			// 		};
-
-
-			// var heatmapLayer = new HeatmapOverlay(cfg);
-
-			// var map1 = new L.Map('map', {
-			// 		center: new L.LatLng(30.4594579639, 104.0357266458),
-			// 		zoom: 12,
-			// 		layers: [baseLayer, heatmapLayer]
-			// 	});
-
-			// heatmapLayer.setData(testData);
-			
-
-	// //******************终点热力图**************************************************************//
-	// //**************************************************************************************************************//
-	// //**************************************************************************************************************//		
-	// //**************************************************************************************************************//
-	//   //     var testData = {
-	// 		// 		max: 1,
-	// 		// 		data: end
-	// 		// 	};        
-
-	// 		// var baseLayer = L.tileLayer(
-	// 		// 		'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-	// 		// 		attribution: '...',
-	// 		// 		maxZoom: 20
-	// 		// 		}
-	// 		// 	);
-	// 		// var cfg = {
-	// 		// 		// radius should be small ONLY if scaleRadius is true (or small radius is intended)
-	// 		// 		// if scaleRadius is false it will be the constant radius used in pixels
-	// 		// 		"radius": 4,
-	// 		// 		"maxOpacity": .8, 
-	// 		// 		// scales the radius based on map zoom
-	// 		// 		"scaleRadius": false, 
-	// 		// 		// if set to false the heatmap uses the global  maximum for colorization
-	// 		// 		// if activated: uses the data maximum within the current map boundaries 
-	// 		// 		//   (there will always be a red spot with useLocalExtremas true)
-	// 		// 		"useLocalExtrema": true,
-	// 		// 		// which field name in your data represents the latitude - default "lat"
-	// 		// 		latField: 'lat',
-	// 		// 		// which field name in your data represents the longitude - default "lng"
-	// 		// 		lngField: 'lng',
-	// 		// 		// which field name in your data represents the data value - default "value"
-	// 		// 		valueField: 'count' 
-	// 		// 		};
+	$.getJSON("/data/zones.json",function(dataset){
+		var width = 322;
+		var height = 110;
+		for (var z = 0; z < 11; z++) {
+			var svg = d3.select("#mapbox")
+						.append("svg")
+						.attr("id","svg"+z)
+						.attr("width",width)
+						.attr("height",height);
 
 
-	// 		// var heatmapLayer = new HeatmapOverlay(cfg);
-	                                
-	// 		// var map1 = new L.Map('map', {
-	// 		// 		center: new L.LatLng(30.4594579639, 104.0357266458),
-	// 		// 		zoom: 12,
-	// 		// 		layers: [baseLayer, heatmapLayer]
-	// 		// 	});
+			var padding = { top: 0, right: 0, bottom: 0, left: 0 };
 
-	// 		// heatmapLayer.setData(testData);		
+			svg.append("rect")
+						.attr("x",0)
+						.attr("y",padding.top)
+						.attr("width",width)
+						.attr("height",height - padding.top - padding.bottom)
+						.attr("fill","#262626");
 
+			var speeddata = [];
+			var countdata = [];
 
-			//标记点
-	 //        var marker = L.marker([30.463, 104.0328]);
-	 //        marker.bindPopup("<b>顾拜旦现代五项赛事中心</b>");
-	 //        marker.addTo(map1);
+			var piece = dataset[z]["data"];
 
-	 //        //图标
-	 //        var shadowUrl = "http://leafletjs.com/examples/custom-icons/leaf-shadow.png";
+			for (var i = 0; i < piece.length; i+=20) {
+				countdata.push({"time":piece[i]["time"],"count":piece[i]["count"]});
+				speeddata.push({"time":piece[i]["time"],"speed":piece[i]["speed"]});
+			}
 
-	 //        // //配置图标选项
-	 //        var LeafIcon = L.Icon.extend({
-	 //            options: {
-	 //                shadowUrl: shadowUrl, //阴影图像
-	 //                iconSize: [15, 55], //图标的大小
-	 //                shadowSize: [50, 64], //阴影的大小
-	 //                iconAnchor: [22, 94], //点图标将对应标记的位置
-	 //                shadowAnchor: [4, 62], //相同的影子
-	 //                popupAnchor: [-3, -76] //点弹出打开相对于iconanchor
-	 //            }
-	 //        });
-			                
-		// });
+			var maxCount = 0;
 
-	// function _redraw(time) {
-	// 	// heat.onAdd(map);
-	// 	// heat._initCanvas();
-	// 	heat.setLatLngs(gps[time]);
-	// }
+			// 确定自由行车速度
+			var averCount = 0, _had = 0;
+			for (var i = 0; i < countdata.length; i++) {
+				if (countdata[i]["count"] > 0) {
+					averCount += countdata[i]["count"];
+					_had++;
+					if (countdata[i]["count"] > maxCount)
+						maxCount = countdata[i]["count"];
+				}
+			}
+			averCount /= _had;
+			var averSpeed = 0, had = 0;
+			for (var i = 0; i < speeddata.length; i++) {
+				if (speeddata[i]["speed"] > 0 && countdata[i]["count"] < averCount / 4) {
+					averSpeed += speeddata[i]["speed"];
+					had ++;
+				}
+			}
+			averSpeed /= had;
+			if (averSpeed == 0 || had == 0) {
+				averSpeed = 0, had = 0;
+				for (var i = 0; i < speeddata.length; i++) {
+					if (speeddata[i]["speed"] > 0 && countdata[i]["count"] < averCount / 2) {
+						averSpeed += speeddata[i]["speed"];
+						had ++;
+					}
+				}
+				averSpeed /= had*1.1;
+			}
+			if (averSpeed == 0 || had == 0) {
+				averSpeed = 0, had = 0;
+				for (var i = 0; i < speeddata.length; i++) {
+					if (speeddata[i]["speed"] > 0 && countdata[i]["count"] < averCount) {
+						averSpeed += speeddata[i]["speed"];
+						had ++;
+					}
+				}
+				averSpeed /= had*1.1;
+			}
+			if (averSpeed == 0 || had == 0) {
+				averSpeed = 0, had = 0;
+				for (var i = 0; i < speeddata.length; i++) {
+					if (speeddata[i]["speed"] > 0) {
+						averSpeed += speeddata[i]["speed"];
+						had ++;
+					}
+				}
+				averSpeed /= had*1.1;
+			}
+
+			d3.select("#ti"+z+"c").text(parseInt(maxCount+0.5));
+			d3.select("#ti"+z+"d").text(parseInt(averCount+0.5) + " 辆");
+			d3.select("#ti"+z+"e").text(parseInt(averSpeed*100+0.5)/100 + " m/s");
+
+			// 还原零点
+			for (var i = 0; i < speeddata.length; i++) {
+				if (countdata[i]["count"] <= 5 || speeddata[i]["speed"]==-255) {
+					speeddata[i]["speed"] = averSpeed;
+				}
+			}
+
+			// 调整折线图显示效果
+			for (var i = 0; i < speeddata.length; i++) {
+				if (i > 0 && i < speeddata.length - 1) {
+					speeddata[i]["speed"] = 
+							Math.sqrt(Math.pow(speeddata[i]["speed"], 2) + Math.pow((speeddata[i-1]["speed"] + speeddata[i+1]["speed"]) / 2, 2));
+					var aver = 0;
+					var left = i < 10 ? 0 : i - 10;
+					var right = i > speeddata.length - 11 ? speeddata.length - 1 : i + 10;
+					for (var a = left; a <= right; a++)
+						aver += speeddata[a]["speed"];
+					aver /= (right - left + 1);
+					if (speeddata[i]["speed"] >= aver * 1.2)
+						speeddata[i]["speed"] = aver * 1.2;
+				}
+			}
+
+			var xScale = d3.scale.linear()
+							.domain([0, 8640])
+							.range([0, width - padding.left - padding.right]);
+
+			var yScale = d3.scale.linear()
+							.domain([0, 100])
+							.range([height - padding.top - padding.bottom, 0]);
+
+			var yScale_s = d3.scale.linear()
+							.domain([0, 40])
+							.range([0, height - padding.top - padding.bottom]);
+
+			var colortab1 = d3.interpolateRgb("#AFEEEE", "#4169E1");
+
+			var colortab2 = d3.interpolateRgb("#FFFF00", "#FF0000");
+
+			var tip = d3.select("#ti"+z+"c");
+
+			var rect = svg.selectAll("rect")
+						.data(countdata)
+						.enter()
+						.append("rect")
+						.attr("class","rect")
+						.attr("fill",function(d,i) {
+							if (speeddata[i]["speed"] < averSpeed / 2) {
+								if (d["count"] < parseInt(tip.text()))
+									tip.text(d["count"]);
+								return colortab2((d["count"]-(maxCount/4.8))/(maxCount-maxCount/4.8));
+							}
+							return colortab1(d["count"]/(maxCount/2.4));
+						})
+						.attr("x", function(d,i) {
+							return padding.left + i * (width*2 - padding.left - padding.right)/(countdata.length+1);
+						})
+						.attr("y", function(d,i) {
+							return padding.top + yScale(d["count"]);
+						})
+						.attr("width",(width - padding.left - padding.right)/(countdata.length+1))
+						.attr("height",function(d) {
+							return height - padding.top - padding.bottom - yScale(d["count"]);
+						})
+						.attr("transform","translate(-322,0)");
+
+			tip.text(parseInt(Math.sqrt(parseInt(tip.text())*maxCount)) + " 辆");
+
+			// 建立数组
+			var status = [];
+			for (var i = 0; i < speeddata.length; i++) {
+				var bool = speeddata[i]["speed"] < averSpeed / 2 ? true : false;
+				status.push({crowded:bool,start:speeddata[i]["time"],end:speeddata[i]["time"]})
+			}
+			var all = [];
+			var update = status[0];
+			var bool = status[0]["crowded"];
+			for (var i = 1; i < status.length; i++) {
+				if (status[i]["crowded"] == bool) {
+					update["end"] = status[i]["end"];
+				}
+				else {
+					all.push(update);
+					update = status[i];
+					bool = status[i]["crowded"];
+				}
+			}
+			all.push(update);
+			status = all;
+			var minlen = status[0]["end"]-status[0]["start"];
+			for (var i = 0; i < status.length; i++) {
+				if (minlen > status[i]["end"]-status[i]["start"])
+					minlen = status[i]["end"]-status[i]["start"];
+			}
+			// 迭代至分堆最小时间跨度大于二十分钟
+			while (minlen < 1200) {
+				for (var i = 1; i < status.length-1; i++) {
+					if (status[i]["end"]-status[i]["start"] >= 1200 && status[i]["crowded"]==true)
+						continue;
+					if (status[i]["end"]-status[i]["start"] < (status[i+1]["end"]-status[i-1]["start"])/4) {
+						status[i]["crowded"] = status[i+1]["crowded"];
+					}
+				}
+				try {
+					if (status[status.length-1]["end"]-status[status.length-1]["start"] >= 1200 && status[status.length-1]["crowded"]==true);
+					else if (status[status.length-1]["end"]-status[status.length-1]["start"] 
+								< (status[status.length-2]["end"]-status[status.length-2]["start"])/3) {
+						status[status.length-1]["crowded"] = status[status.length-2]["crowded"];
+					}
+				} catch (error) {
+					break;
+				}
+				var all = [];
+				var update = status[0];
+				var bool = status[0]["crowded"];
+				for (var i = 1; i < status.length; i++) {
+					if (status[i]["crowded"] == bool) {
+						update["end"] = status[i]["end"];
+					}
+					else {
+						all.push(update);
+						update = status[i];
+						bool = status[i]["crowded"];
+					}
+				}
+				all.push(update);
+				status = all;
+				minlen = status[0]["end"]-status[0]["start"];
+				for (var i = 0; i < status.length; i++) {
+					if (minlen > status[i]["end"]-status[i]["start"])
+						minlen = status[i]["end"]-status[i]["start"];
+				}
+			}
+			for (var i = 0; i < status.length; i++) {
+				if (status[i]["crowded"] == true) {
+					if (d3.select("#ti"+z+"f").html() == " - ")
+						d3.select("#ti"+z+"f").html((status[i]["start"]) + " - " + (status[i]["end"]));
+					else
+						d3.select("#ti"+z+"f").html(d3.select("#ti"+z+"f").html() 
+														+ "<br />" + (status[i]["start"]) + " - " + (status[i]["end"]));
+				}
+			}
+
+			var linePath = d3.svg.line()
+				.interpolate("linear")
+				.x(function(d){ return padding.left + d["time"]/86410 * (2*width - padding.left - padding.right); })
+				.y(function(d){ return padding.top + yScale_s(d["speed"]); });
+
+			svg.selectAll("path")
+				.data([speeddata])
+				.enter()
+				.append("path")
+				.attr("class","path")
+				.attr("transform","translate(-322,0)")
+				.attr("d", function(d) {
+					return linePath(d);
+				})
+				.attr("fill","none")
+				.attr("stroke-width",0.7)
+				.attr("stroke", "yellow");
+
+			zones.push([]);
+			for (var i = 0; i < countdata.length; i++) {
+				zones[z].push([countdata[i]["time"],countdata[i]["count"],speeddata[i]["speed"]]);
+			}
+		}
+		//console.log(zones);
+	});
+}
+
+// 网络图
+{
+	var svgForce = d3.select("#map0").append("svg")
+				.attr("id","forcechart")
+				.attr("width","100%")
+				.attr("height","100%");
+
+	var nodes = [];
+
+	for (var i = 1; i < 12; i++) {
+		nodes.push({name: i});
+	}
+
+	var edges = [];
+
+	var force_tip = d3.select("#map0").append("div")
+						.style("background-color","white")
+						.style("border","1px solid black")
+						.style("padding","10px")
+						.style("position","absolute")
+						.style("top","0px")
+						.style("left","15px")
+						.style("color","black")
+						.style("visibility","hidden")
+						.html("加载中……")
+						.on("mouseover",function() {
+							force_tip.style("visibility","visible");
+						})
+						.on("mouseout",function() {
+							force_tip.style("visibility","hidden");
+						});
+
+	$.getJSON("/data/Q2_lines.json",function(dataset){
+		for (var i = 0; i < dataset.length; i++) {
+			edges.push({source:dataset[i][0]-1,target:dataset[i][1]-1});
+		}
+
+		var force = d3.layout.force()
+					.nodes(nodes)
+					.links(edges)
+					.size([200,200])
+					.linkDistance(100)
+					.charge(-100);
+
+		force.start();
+
+		// console.log(nodes);
+		// console.log(edges);
+
+		var colorTable = d3.scale.category20();
+
+		var zone = null;
+
+		var lines = svgForce.selectAll(".forceLine")
+						.data(edges)
+						.enter()
+						.append("line")
+						.attr("id",function(d,i) {
+							return "L"+i;
+						})
+						.attr("transform","translate(100,100)")
+						.attr("class","forceLine")
+						.style("stroke","rgba(66,139,202,0.3)")
+						.style("stroke-width",0.2);
+
+		var circles = svgForce.selectAll(".forceCircle")
+						.data(nodes)
+						.enter()
+						.append("circle")
+						.attr("transform","translate(100,100)")
+						.attr("id",function(d) {
+							return "P-" + d["name"];
+						})
+						.attr("class","forceCircle")
+						.attr("r",8)
+						.style("fill",function(d,i) {
+							return colorTable(i);
+						})
+						.style("stroke","white")
+						.style("stroke-width",1)
+						.call(force.drag)
+						.on("mouseover",function() {
+							d3.select(this)
+								.attr("r",10)
+								.style("stroke","gold");
+							var id = d3.select(this).attr("id").substring(2,d3.select(this).attr("id").length);
+							var time = parseInt(selected/20);
+							var speed = zones[id-1][time][1] == 0 ? "no record" : parseInt(zones[id-1][time][2]*100)/100;
+							var stat = (speed) / (zones[id-1][0][2]);
+							// console.log(zones[id-1][0][2]);
+							// console.log(speed);
+							// console.log(stat);
+							var crowded = " - ";
+							if (stat > 0.5)
+								crowded = "流畅";
+							else if (stat > 0.3)
+								crowded = "拥堵";
+							else
+								crowded = "严重拥堵";
+							if (speed != "no record")
+								speed += " m/s";
+							force_tip.style("visibility","visible")
+									.html("路段编号：" + id + "<br />"
+										+ "路段地址：" + d3.select("#ti"+(id-1)+"b").text() + "<hr />"
+										+ "当前流量：" + zones[id-1][time][1] + "<br />"
+										+ "当前车速：" + speed + "<br />"
+										+ "通行状态：" + crowded);
+						})
+						.on("mouseout",function() {
+							d3.select(this)
+								.attr("r",8)
+								.style("stroke","white");
+							force_tip.style("visibility","hidden");
+						});
+
+		force.on("tick", function () {
+			if(force.alpha()<=0.05) {  // 足够稳定时，才渲染一次
+				lines.attr("x1", function (d) { return d.source.x; })
+					.attr("y1", function (d) { return d.source.y; })
+					.attr("x2", function (d) { return d.target.x; })
+					.attr("y2", function (d) { return d.target.y; });
+				circles.attr("cx", function (d) { return d.x; })
+					.attr("cy", function (d) { return d.y; });
+
+				force.stop(); // 渲染完成后立即停止刷新
+			}
+		});
+
+		force.on("start", function() {
+			console.log("运动开始");
+		});
+		force.on("end", function() {
+			console.log("运动结束");
+		});
+	});
 }
