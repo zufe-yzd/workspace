@@ -3,8 +3,6 @@
 <%- include import %>
 	<li class="active"><a href="#">外围</a></li>
 	<li><a href="/page2">监控</a></li>
-	<li><a href="/page3">全局</a></li>
-	<li><a href="#">统计</a></li>
 <%- include left %>
 
 <div class="col-xs-8 col-sm-8" style="height:300px;">
@@ -24,7 +22,10 @@
 		<div class="col-xs-2 col-sm-2" style="height:300px;">
 			<div class="row" style="height: 145px;">
 				<div class="piece col-xs-12 col-sm-12" id="pic" style="height: 145px;">
+					<button id="button1" type="button" onclick="drawroad()" style="height: 24px;width:157px;BORDER-RIGHT: #2C59AA 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #2C59AA 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#D7E7FA); BORDER-LEFT: #2C59AA 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #2C59AA 1px solid;">改道</button>
+					<button id="button2" type="button" onclick="drawcar()" style="height: 24px;width:157px;BORDER-RIGHT: #2C59AA 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #2C59AA 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#D7E7FA); BORDER-LEFT: #2C59AA 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #2C59AA 1px solid;">接驳车</button>
 				</div>
+
 			</div>
 			<div class="row" style="height: 140px;">
 				<div class="piece col-xs-12 col-sm-12" id="chart3" style="height: 140px; margin-top: 15px;">

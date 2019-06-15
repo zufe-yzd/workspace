@@ -58,7 +58,7 @@
 	d3.select("#pic")
 		.style("padding","0px")
 		.append("img")
-		.attr("src","/images/small.jpg");
+		.attr("src","/images/small1.jpg");
 
 	var tipBox = d3.select("#chart2")
 		.append("table")
@@ -402,6 +402,7 @@
 // 热力图
 {
 	var gps = [];
+
 	function Time(m,n) {
 		// body...
 		var time = Math.floor(Math.random()*(m - n) + n);
@@ -411,9 +412,19 @@
 	}
 	var map1 = new L.Map('map', {
 				center: new L.LatLng(30.4620+0.0025, 104.0353-0.0020),//(30.4594579639, 104.0357266458),
-				zoom: 13,
+				zoom: 12,
 			});
-
+	function drawroad(){
+		L.polyline([[30.4565,104.019813-0.019], [30.46545,104.019813-0.0126],[30.4602,104.025275-0.007]],{color:'#87CEFA ',opacity:'1',weight:'3'}).addTo(map1).bindPopup("改道1");
+		L.polyline([[30.4516,104.019813+0.001], [30.457,104.019813-0.001], [30.459,104.019813-0.0035]],{color:'#87CEFA ',opacity:'1',weight:'3'}).addTo(map1).bindPopup("改道2");
+		L.polyline([[30.4795,104.019813+0.03], [30.4795,104.019813+0.0082]],{color:'#87CEFA ',opacity:'1',weight:'3'}).addTo(map1).bindPopup("改道4");
+		L.polyline([[30.4795,104.019813+0.0175], [30.473,104.019813+0.0159]],{color:'#87CEFA ',opacity:'1',weight:'3'}).addTo(map1).bindPopup("改道4");
+		L.polyline([[30.4795,104.019813+0.026], [30.473,104.019813+0.0245]],{color:'#87CEFA ',opacity:'1',weight:'3'}).addTo(map1).bindPopup("改道5");
+		L.polyline([[30.4495, 104.039],[30.447,104.038], [30.445, 104.0349],[30.45, 104.02],[30.447, 104.016],[30.4477, 104.0135],[30.451, 104.0163]],{color:'#87CEFA ',opacity:'1',weight:'3'}).addTo(map1).bindPopup("改道6");
+		L.polyline([[30.473,104.019813+0.0171],[30.469,104.019813+0.0181],[30.4635,104.019813+0.016]],{color:'#87CEFA ',opacity:'1',weight:'3'}).addTo(map1).bindPopup("改道4");
+	}
+	
+	
 	$.getJSON("/data/gps_by_time_match.json",function(dataset){
 		for (var i = 0; i < dataset.length; i++) {
 			gps.push([]);
@@ -429,7 +440,7 @@
 		maxCount = 8;
 
 		redraw(5400);
-
+		// drawcar();
 		start();
 	});
 
@@ -437,6 +448,118 @@
 	var layerName;
 	var heatmapLayer;
 
+	var gps1 = [];
+		$.getJSON("/data/order.json",function(dataset){		
+			for(var i = 0;i < dataset.length;i++ ){
+					gps1.push({"lat":dataset[i]["getOffCoordinate"][1]+0.0025, "lng":dataset[i]["getOffCoordinate"][0]-0.0020,"count":1});								
+			}
+		});
+	function drawcar(){
+		if(heatmapLayer != null)
+			heatmapLayer.remove();
+		if(layerName != null)
+			layerName.remove();
+
+		var Data = {
+				max: maxCount,
+				data: gps1
+				}        
+		
+		// timer += 10;
+		// b=Time(8640,13);
+
+		var baseLayer = L.tileLayer(
+				'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+				attribution: '...',
+				maxZoom: 15,
+				minZoom: 10
+				}
+			).addTo(map1);
+
+		var heatmapLayer =  new HeatmapOverlay({radius:4});
+		layerName = heatmapLayer;
+		layerName.addTo(map1);
+		// var map1 = new L.Map('map', {
+		// 		center: new L.LatLng(30.463, 104.0328),//(30.4594579639, 104.0357266458),
+		// 		zoom: 13,
+		// 		layers: [baseLayer, heatmapLayer]
+		// 	});
+		
+		layerName.setData(Data);
+
+		var icon1 = new L.Icon({
+		  iconUrl: '/data/end.ico',
+		  iconSize: [15, 15],
+		  iconAnchor: [12, 41],
+		  popupAnchor: [1, -34],
+		});
+		L.marker([30.475, 104.0353], { icon: icon1 }).addTo(map1);
+
+		var icon2 = new L.Icon({
+		  iconUrl: '/data/end.ico',
+		  iconSize: [15, 15],
+		  iconAnchor: [12, 41],
+		  popupAnchor: [1, -34],
+		});
+		L.marker([30.455, 104.0353], { icon: icon2 }).addTo(map1);
+
+		var icon3 = new L.Icon({
+		  iconUrl: '/data/end.ico',
+		  iconSize: [15, 15],
+		  iconAnchor: [12, 41],
+		  popupAnchor: [1, -34],
+		});
+		L.marker([30.46, 104.0353-0.025], { icon: icon3 }).addTo(map1);
+
+		var icon4 = new L.Icon({
+		  iconUrl: '/data/end.ico',
+		  iconSize: [15, 15],
+		  iconAnchor: [12, 41],
+		  popupAnchor: [1, -34],
+		});
+		L.marker([30.4366, 104.0353+0.0088], { icon: icon4 }).addTo(map1);
+
+		var icon5 = new L.Icon({
+		  iconUrl: '/data/end.ico',
+		  iconSize: [15, 15],
+		  iconAnchor: [12, 41],
+		  popupAnchor: [1, -34],
+		});
+		L.marker([30.45, 104.034], { icon: icon5 }).addTo(map1);
+
+		var icon6 = new L.Icon({
+		  iconUrl: '/data/end.ico',
+		  iconSize: [15, 15],
+		  iconAnchor: [12, 41],
+		  popupAnchor: [1, -34],
+		});
+		L.marker([30.43, 104.072], { icon: icon6 }).addTo(map1);
+
+		var icon7 = new L.Icon({
+		  iconUrl: '/data/end.ico',
+		  iconSize: [15, 15],
+		  iconAnchor: [12, 41],
+		  popupAnchor: [1, -34],
+		});
+		L.marker([30.492, 104.034], { icon: icon7 }).addTo(map1);
+
+		var icon8 = new L.Icon({
+		  iconUrl: '/data/end.ico',
+		  iconSize: [15, 15],
+		  iconAnchor: [12, 41],
+		  popupAnchor: [1, -34],
+		});
+		L.marker([30.48, 104.067], { icon: icon8 }).addTo(map1);
+
+		var icon9 = new L.Icon({
+		  iconUrl: '/data/end.ico',
+		  iconSize: [15, 15],
+		  iconAnchor: [12, 41],
+		  popupAnchor: [1, -34],
+		});
+		L.marker([30.446, 104.0353-0.05], { icon: icon9 }).addTo(map1);
+
+	}
 	function redraw(n) {
 		if(heatmapLayer != null)
 			heatmapLayer.remove();
@@ -454,8 +577,8 @@
 		var baseLayer = L.tileLayer(
 				'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
 				attribution: '...',
-				maxZoom: 13,
-				minZoom: 13
+				maxZoom: 15,
+				minZoom: 10
 				}
 			).addTo(map1);
 
@@ -485,8 +608,8 @@
 		var baseLayer = L.tileLayer(
 				'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
 				attribution: '...',
-				maxZoom: 13,
-				minZoom: 13
+				maxZoom: 15,
+				minZoom: 10
 				}
 			).addTo(map1);
 
@@ -612,9 +735,9 @@
 	        }
 	    });
 	}
-}
 
-// 极坐标系柱形图
+}
+//系柱形图
 {
 	var mychart = echarts.init(document.getElementById('rchart1'));
 	var dataset = [];
