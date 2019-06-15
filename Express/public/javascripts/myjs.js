@@ -617,11 +617,37 @@
 // 极坐标系柱形图
 {
 	var mychart = echarts.init(document.getElementById('rchart1'));
-	var dataset =  [1.3083, 1.0833, 0.8888, 0.5638, 0.2305, 0.6305, 0.9361, 4.3555, 10.0472, 12.1027, 13.8666, 22.1500, 24.9694, 32.2611, 39.3722, 61.7166, 106.7416, 166.0305, 225.9500, 94.7194, 38.2055, 37.9055, 24.8777, 36.7805];
+	var dataset = [];
+	var sum = 0;
+	for (var i = 0; i < _data.length; i++) {
+		sum += _data[i]["count"];
+		if (i != 0 && _data[i]["time"] % 3600 == 0) {
+			dataset.push(parseInt(sum/36)/10);
+			sum = 0;
+		}
+	}
+	dataset.push(parseInt(sum/36)/10);
+	// console.log(dataset);
+	var speedset = [];
+	sum = 0;
+	for (var i = 0; i < speeddata.length; i++) {
+		sum += speeddata[i]["speed"];
+		if (speeddata[i]["time"] % 3600 == 0) {
+			speedset.push(parseInt(sum/36)/10);
+			sum = 0;
+		}
+	}
+	// console.log(speedset);
+	var colorlist = [];
+	var colorPlate = d3.interpolateHsl("green", "red");
+	for (var i = 0; i < speedset.length; i++) {
+		colorlist.push((colorPlate(1.2-(speedset[i]/15))).toString());
+	}
+	// console.log(colorlist);
 	var option = {
 		angleAxis: {
 			type: 'category',
-			data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24],
+			data: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],
 			z: 10
 		},
 		radiusAxis: {
@@ -637,7 +663,6 @@
 			itemStyle: {
 				normal: {
 					color: function(params) {
-						var colorlist = ['#BBFFEE','#CCFF99','#BBFF66','#66FF66','#99FF33','#99DD00','#66DD00','#88AA00','#55AA00','#668800','#FFBB00','#DDAA00','#FFAA33','#FF8800','#E63F00','#FF0000','#CC0000','#AA0000','#880000','#FF3333','#FF5511','#FFBB00','#FFCC22','#FFFF77',];
 						return colorlist[params.dataIndex];
 					}
 				}
@@ -657,7 +682,7 @@
 	mychart.setOption(option);
 }
 
-// 极坐标系柱状图
+// 流量 - 速度图
 {
 	var timeData = [];
 	for(var i = 0 ; i < _data.length; i++){
@@ -1074,6 +1099,30 @@
 			}
 		}
 		//console.log(zones);
+		for (var z = 0; z < zones.length; z++) {
+			var sumC = [], sumS = [];
+			for (var j = 0; j < 24; j++) {
+				sumC.push([]);
+				sumS.push([]);
+			}
+			for (var i = 0; i < zones[z].length; i++) {
+				sumC[parseInt(zones[z][i][0]/3600)] += zones[z][i][1];
+				sumS[parseInt(zones[z][i][0]/3600)] += zones[z][i][2];
+			}
+			for (var j = 0; j < 24; j++) {
+				data0.push([j,z,(d3.sum(sumC[j])/sumC[j].length)]);
+				data1.push([j,z,(d3.sum(sumS[j])/sumS[j].length)]);
+			}
+		}
+		data0 = data0.map(function (item) {
+			return [item[0], item[1], item[2] || '-'];
+		});
+		data1 = data1.map(function (item) {
+			return [item[0], item[1], item[2] || '-'];
+		});
+		// console.log(data0);
+		// console.log(data1);
+		redraw4("count");
 	});
 }
 
@@ -1104,9 +1153,11 @@
 						.html("加载中……")
 						.on("mouseover",function() {
 							force_tip.style("visibility","visible");
+							showing.style("visibility","visible");
 						})
 						.on("mouseout",function() {
 							force_tip.style("visibility","hidden");
+							showing.style("visibility","hidden");
 						});
 
 	$.getJSON("/data/Q2_lines.json",function(dataset){
@@ -1142,6 +1193,14 @@
 						.style("stroke","rgba(66,139,202,0.3)")
 						.style("stroke-width",0.2);
 
+		var showing = d3.select("#chart4").append("div")
+							.style("position","absolute").style("left","26px").style("top","7px").style("visibility","hidden")
+							.style("border-radius","8px").style("padding","1px 2px").style("font-size","8px").style("color","black").style("background-color","LawnGreen").html("<b>-></b>");
+
+		var toppx = [];
+		for (var i = 0; i < 12; i++)
+			toppx.push(7+13*(10-i));
+
 		var circles = svgForce.selectAll(".forceCircle")
 						.data(nodes)
 						.enter()
@@ -1171,7 +1230,7 @@
 							// console.log(stat);
 							var crowded = " - ";
 							if (stat > 0.5)
-								crowded = "流畅";
+								crowded = "通畅";
 							else if (stat > 0.3)
 								crowded = "拥堵";
 							else
@@ -1184,12 +1243,14 @@
 										+ "当前流量：" + zones[id-1][time][1] + "<br />"
 										+ "当前车速：" + speed + "<br />"
 										+ "通行状态：" + crowded);
+							showing.style("visibility","visible").style("top",toppx[id-1]+"px");
 						})
 						.on("mouseout",function() {
 							d3.select(this)
 								.attr("r",8)
 								.style("stroke","white");
 							force_tip.style("visibility","hidden");
+							showing.style("visibility","hidden");
 						});
 
 		force.on("tick", function () {
@@ -1212,4 +1273,159 @@
 			console.log("运动结束");
 		});
 	});
+}
+
+// 矩阵图
+{
+	var mychart = echarts.init(document.getElementById('chart4'));
+
+	var hours = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23];
+	var zoneID = [1,2,3,4,5,6,7,8,9,10,11];
+
+	var data0 = [];
+	for (var z = 0; z < zoneID.length; z++) {
+		for (var h = 0; h < hours.length; h++) {
+			data0.push([z,h,0]);
+		}
+	}
+
+	var data1 = [];
+	for (var z = 0; z < zoneID.length; z++) {
+		for (var h = 0; h < hours.length; h++) {
+			data1.push([z,h,0]);
+		}
+	}
+
+	data0 = data0.map(function (item) {
+		return [item[1], item[0], item[2] || '-'];
+	});
+	data1 = data0.map(function (item) {
+		return [item[0], item[1], item[2] || '-'];
+	});
+
+	option = {
+		tooltip: {
+			position: 'top',
+			formatter: function(params) {
+				return '平均流量:' + params.value[2].toFixed(2);
+			}
+		},
+		animation: false,
+		grid: {
+			height: '90%',
+			y: '5%'
+		},
+		xAxis: {
+			type: 'category',
+			data: hours,
+			splitArea: {
+				show: true
+			}
+		},
+		yAxis: {
+			type: 'category',
+			data: zoneID,
+			splitArea: {
+				show: true
+			}
+		},
+		visualMap: {
+			min: 0,
+			max: 10,
+			calculable: true,
+			orient: 'vertical',
+			top: 'center'
+		},
+		series: [{
+			name: '平均流量',
+			type: 'heatmap',
+			data: data0,
+			label: {
+				normal: {
+					show: true
+				}
+			},
+			itemStyle: {
+				emphasis: {
+					shadowBlur: 10,
+					shadowColor: 'rgba(0, 0, 0, 0.5)'
+				}
+			}
+		}]
+	};
+	mychart.setOption(option);
+
+	function redraw4(kind) {
+		var data = kind=="count" ? data0 : data1;
+		var title = kind=="count" ? "平均流量" : "平均车速";
+		var maxL = kind=="count" ? 10 : 6;
+		var minL = kind=="count" ? 0 : 3;
+		option = {
+			tooltip: {
+				position: 'top',
+				formatter: function(params) {
+					return title + ':' + params.value[2].toFixed(2);
+				}
+			},
+			animation: false,
+			grid: {
+				height: '90%',
+				y: '5%'
+			},
+			xAxis: {
+				type: 'category',
+				data: hours,
+				splitArea: {
+					show: true
+				}
+			},
+			yAxis: {
+				type: 'category',
+				data: zoneID,
+				splitArea: {
+					show: true
+				}
+			},
+			visualMap: {
+				min: minL,
+				max: maxL,
+				calculable: true,
+				orient: 'vertical',
+				top: 'center'
+			},
+			series: [{
+				name: title,
+				type: 'heatmap',
+				data: data,
+				label: {
+					normal: {
+						show: false
+					}
+				},
+				itemStyle: {
+					emphasis: {
+						shadowBlur: 10,
+						shadowColor: 'rgba(0, 0, 0, 0.5)'
+					}
+				}
+			}]
+		};
+		mychart.setOption(option);
+
+		if (kind=="speed")
+			d3.select("#shift").html("速<br />度").attr("onclick","redraw4(\"count\")");
+		else
+			d3.select("#shift").html("流<br />量").attr("onclick","redraw4(\"speed\")");
+	}
+
+	d3.select("#chart4").append("button")
+						.attr("type","button")
+						.attr("id","shift")
+						.attr("class","btn btn-default")
+						.html("流<br />量")
+						.style("padding","8px 2px")
+						.style("position","absolute")
+						.style("left","366px")
+						.style("top","44px")
+						.attr("onclick","redraw4(\"speed\")");
 }
