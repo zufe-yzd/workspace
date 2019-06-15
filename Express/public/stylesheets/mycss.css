@@ -4,24 +4,28 @@ body, html {
 	overflow: hidden;
 	margin: 0;
 	padding: 0;
-	background: black;
+	background: rgb(11,18,32);
 	color: white;
 	font-family: "微软雅黑";
 }
 
 * {
 	box-sizing: border-box;
+
 }
 
 li {
 	margin: 80px 0px;
 	font-size: 18px;
+    background-image: url(/images/center01.png);
+    background-size: cover;
 }
 
 table {
 	font-size: 14px;
 	letter-spacing: 2.4px;
 	text-align: center;
+
 }
 
 tr {
@@ -31,45 +35,65 @@ tr {
 }
 
 th {
-	color: black;
+	color: rgb(80,200,250);
+	font-weight: normal;
 	padding: 6px;
 	text-align: center;
-	background-color: #888888;
+	/*background-color: #88888;*/
 }
 
 td {
 	color: inherit;
 	padding: 6px;
-	background-color: #222222;
+	font-family: "幼圆"
+	/*background-color: #222222;*/
 }
 
 hr {
 	margin-top: 16px;
 	margin-bottom: 16px;
+
 }
 
 .piece {
 	height: 100%;
 	padding: auto;
-	background-color: #444444;
+	background-color: ;
+	background-image: url(/images/center01.png);
+	background-size:cover;
+
 }
 
 .smallbtn {
 	width: 20px;
 	height: 20px;
 	padding: 0px 4px 4px 4px;
+	background-color: rgb(50,100,170);
+	color: rgb(50,180,220);
+
+
+
 }
 
 #title {
-	
+	 text-align: center;
+	 width:100%; 
+	 height: 90px; 
+	 background: url(/images/bg_top.png) center no-repeat ;
+	 font-size: 36px; 
+	 color: #00f6ff; 
+	 line-height: 90px; 
+	 margin: 0 auto;
 }
 
 #navigator {
-	border: 1px solid black;
 	padding: 20px 0px;
+
+
 }
 
 #container {
 	margin: 0px;
 	padding: 0px;
+
 }
