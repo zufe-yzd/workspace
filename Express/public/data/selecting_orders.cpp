@@ -27,15 +27,6 @@ class Order {
 		}
 };
 
-double parseTime(string str) {
-	int value = 0;
-	for (size_t i = 0; i < str.size(); i++) {
-		value *= 10;
-		value += str[i] - '0';
-	}
-	return value - 1525104000;
-}
-
 double parseDouble(string str) {
 	double value = 0;
 	bool flo = false;
@@ -84,7 +75,7 @@ int main() {
 				case 0:
 					newId = data;
 					i = DONE;
-					while (orders[i].id!=newId && i>-1)
+					while (i>-1 && orders[i].id!=newId)
 						i--;
 					if (i==-1) {
 						DONE++;
@@ -125,6 +116,8 @@ int main() {
 	offile.open("selected.json");
 	offile << "[";
 	for (int i=0;i<ALL;i++) {
+		if (orders[i].data.size()==0)
+			continue;
 		double cx = orders[i].data[0].x;
 		double cy = orders[i].data[0].y;
 		if (cx >= 104.0066+0.0025

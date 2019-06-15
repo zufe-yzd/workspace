@@ -1,4 +1,5 @@
 // 地图
+/*
 {
 	var _Width = 430;
 	var _Height = 457;
@@ -114,7 +115,7 @@
 		}
 	});
 }
-
+*/
 // 力导向图
 {
 	var svgForce = d3.select("#map0").append("svg")
@@ -124,15 +125,15 @@
 
 	var nodes = [];
 
-	for (var i = 0; i < 120; i++) {
+	for (var i = 1; i < 12; i++) {
 		nodes.push({name: i});
 	}
 
 	var edges = [];
 
-	$.getJSON("/data/lines.json",function(dataset){
+	$.getJSON("/data/Q2_lines.json",function(dataset){
 		for (var i = 0; i < dataset.length; i++) {
-			edges.push({source:dataset[i][0],target:dataset[i][1]});
+			edges.push({source:dataset[i][0]-1,target:dataset[i][1]-1});
 		}
 
 		var force = d3.layout.force()
@@ -144,8 +145,8 @@
 
 		force.start();
 
-		// console.log(nodes);
-		// console.log(edges);
+		console.log(nodes);
+		console.log(edges);
 
 		var colorTable = d3.scale.category20();
 
@@ -183,6 +184,7 @@
 							d3.select(this)
 								.attr("r",10)
 								.style("stroke","gold");
+							/*
 							var Xmin = 0;
 							var Ymin = 0;
 							var Xmax = 0;
@@ -217,11 +219,13 @@
 										.attr("fill-opacity",0.2)
 										.attr("stroke","orange")
 										.attr("stroke-width",2);
+							*/
 						})
 						.on("mouseout",function() {
 							d3.select(this)
 								.attr("r",8)
-								.style("stroke","white");;
+								.style("stroke","white");
+							/*
 							d3.selectAll(".Z-"+d3.select(this).attr("id").substring(2,d3.select(this).attr("id").length))
 								.style("fill","#286690")
 								.style("stroke-width",0.2)
@@ -229,6 +233,7 @@
 								.attr("r", 1.6);
 							zone.remove();
 							zone = null;
+							*/
 						});
 
 		force.on("tick", function () {

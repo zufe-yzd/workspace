@@ -100,17 +100,7 @@
             </path>
             <path>
               <item name="Python" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Python" type="462c0819:PsiDirectoryNode" />
-              <item name="env" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Python" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
-            <path>
-              <item name="Python" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; Python 3.7 (Python) &gt;" type="70bed36:NamedLibraryElementNode" />
             </path>
           </expand>
           <select />
@@ -247,8 +237,8 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.data_by_time" />
       <item itemvalue="Python.dataByTime" />
+      <item itemvalue="Python.data_by_time" />
       <item itemvalue="Python.k-means" />
       <item itemvalue="Python.order2json" />
       <item itemvalue="Python.tkinter" />

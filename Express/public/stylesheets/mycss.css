@@ -19,13 +19,14 @@ li {
 }
 
 table {
-	font-size: 16px;
+	font-size: 14px;
+	letter-spacing: 2.4px;
 	text-align: center;
 }
 
 tr {
 	color: white;
-	line-height: 1.8em;
+	line-height: 1.2em;
 	margin: 4px;
 }
 
@@ -40,6 +41,11 @@ td {
 	color: inherit;
 	padding: 6px;
 	background-color: #222222;
+}
+
+hr {
+	margin-top: 16px;
+	margin-bottom: 16px;
 }
 
 .piece {
