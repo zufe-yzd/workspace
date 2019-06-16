@@ -102,13 +102,14 @@
 			var svg = d3.select("#zone"+(z+1))
 						.style("overflow","hidden")
 						.style("padding","0px")
+						.style("background-color","rgb(0,25,50)")
+						.style("background-image","none")
 						.append("div")
 						.style("top","10px")
 						.append("svg")
 						.attr("id","svg"+z)
 						.attr("width",width)
 						.attr("height",height)
-						.style("border","1px solid #333")
 						.on("mouseover",function() {
 							d3.select("#line"+d3.select(this).attr("id").substring(3,d3.select(this).attr("id").length)).style("color","LawnGreen");
 							d3.select(this).select("rect").attr("fill","black");
@@ -123,12 +124,12 @@
 
 			var padding = { top: 0, right: 0, bottom: 0, left: 0 };
 
-			svg.append("rect")
-						.attr("x",0)
-						.attr("y",padding.top)
-						.attr("width",width)
-						.attr("height",height - padding.top - padding.bottom)
-						.attr("fill","#262626");
+			// svg.append("rect")
+			// 			.attr("x",0)
+			// 			.attr("y",padding.top)
+			// 			.attr("width",width)
+			// 			.attr("height",height - padding.top - padding.bottom)
+			// 			.attr("fill","#262626");
 
 			var speeddata = [];
 			var countdata = [];
@@ -389,7 +390,7 @@
 		.style("padding","0px")
 		.append("table")
 		.attr("border","0")
-		.style("margin","0px");
+		.style("margin","0px 14px 0px 10px");
 
 
 	function str2time(str) {
@@ -414,7 +415,7 @@
 						.on("mouseover",function() {
 							d3.select("#line"+(parseInt(d3.select(this).attr("id").substring(4,d3.select(this).attr("id").length))+1))
 										.select("rect").attr("fill","black");
-							d3.select(this).style("color","LawnGreen");
+							d3.select(this).style("color","rgb(30,180,220)");
 							showZone(d3.select(this).attr("id").substring(4,d3.select(this).attr("id").length))
 						})			
 						.on("mouseout",function() {
@@ -431,7 +432,7 @@
 		tablecontent_ti.append("td").attr("id","ti"+i+"f").text(" - ");
 		tablecontent_ti.selectAll("td")
 					.style("background-color",function() {
-						return i % 2 == 0 ? "#222222" : "#555555";
+						return i % 2 == 0 ? "" : "";
 					})
 					.style("padding","4.51px 6px");
 	}

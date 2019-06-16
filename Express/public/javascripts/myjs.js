@@ -57,6 +57,7 @@
 
 	d3.select("#pic")
 		.style("padding","0px")
+		.style("overflow","hidden")
 		.append("img")
 		.attr("src","/images/small1.jpg");
 

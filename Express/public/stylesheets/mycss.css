@@ -49,6 +49,11 @@ td {
 	/*background-color: #222222;*/
 }
 
+button {
+	background-color: #FAF0E6;
+	color:white;
+}
+
 hr {
 	margin-top: 16px;
 	margin-bottom: 16px;
@@ -88,6 +93,9 @@ hr {
 
 #navigator {
 	padding: 20px 0px;
+	background-image: url(/images/center01.png);
+	background-position: cover;
+
 
 
 }
