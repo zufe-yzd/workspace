@@ -495,13 +495,13 @@
 		});
 		L.marker([30.475, 104.0353], { icon: icon1 }).addTo(map1);
 
-		var icon2 = new L.Icon({
-		  iconUrl: '/data/end.ico',
-		  iconSize: [15, 15],
-		  iconAnchor: [12, 41],
-		  popupAnchor: [1, -34],
-		});
-		L.marker([30.455, 104.0353], { icon: icon2 }).addTo(map1);
+		// var icon2 = new L.Icon({
+		//   iconUrl: '/data/end.ico',
+		//   iconSize: [15, 15],
+		//   iconAnchor: [12, 41],
+		//   popupAnchor: [1, -34],
+		// });
+		// L.marker([30.455, 104.0353], { icon: icon2 }).addTo(map1);
 
 		var icon3 = new L.Icon({
 		  iconUrl: '/data/end.ico',
@@ -519,13 +519,13 @@
 		});
 		L.marker([30.4366, 104.0353+0.0088], { icon: icon4 }).addTo(map1);
 
-		var icon5 = new L.Icon({
-		  iconUrl: '/data/end.ico',
-		  iconSize: [15, 15],
-		  iconAnchor: [12, 41],
-		  popupAnchor: [1, -34],
-		});
-		L.marker([30.45, 104.034], { icon: icon5 }).addTo(map1);
+		// var icon5 = new L.Icon({
+		//   iconUrl: '/data/end.ico',
+		//   iconSize: [15, 15],
+		//   iconAnchor: [12, 41],
+		//   popupAnchor: [1, -34],
+		// });
+		// L.marker([30.45, 104.034], { icon: icon5 }).addTo(map1);
 
 		var icon6 = new L.Icon({
 		  iconUrl: '/data/end.ico',
@@ -535,13 +535,13 @@
 		});
 		L.marker([30.43, 104.072], { icon: icon6 }).addTo(map1);
 
-		var icon7 = new L.Icon({
-		  iconUrl: '/data/end.ico',
-		  iconSize: [15, 15],
-		  iconAnchor: [12, 41],
-		  popupAnchor: [1, -34],
-		});
-		L.marker([30.492, 104.034], { icon: icon7 }).addTo(map1);
+		// var icon7 = new L.Icon({
+		//   iconUrl: '/data/end.ico',
+		//   iconSize: [15, 15],
+		//   iconAnchor: [12, 41],
+		//   popupAnchor: [1, -34],
+		// });
+		// L.marker([30.492, 104.034], { icon: icon7 }).addTo(map1);
 
 		var icon8 = new L.Icon({
 		  iconUrl: '/data/end.ico',
@@ -551,13 +551,13 @@
 		});
 		L.marker([30.48, 104.067], { icon: icon8 }).addTo(map1);
 
-		var icon9 = new L.Icon({
-		  iconUrl: '/data/end.ico',
-		  iconSize: [15, 15],
-		  iconAnchor: [12, 41],
-		  popupAnchor: [1, -34],
-		});
-		L.marker([30.446, 104.0353-0.05], { icon: icon9 }).addTo(map1);
+		// var icon9 = new L.Icon({
+		//   iconUrl: '/data/end.ico',
+		//   iconSize: [15, 15],
+		//   iconAnchor: [12, 41],
+		//   popupAnchor: [1, -34],
+		// });
+		// L.marker([30.446, 104.0353-0.05], { icon: icon9 }).addTo(map1);
 
 	}
 	function redraw(n) {

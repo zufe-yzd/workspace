@@ -1,6 +1,6 @@
 body, html {
 	width: 100%;
-	height: 100%;
+	height: 110%;
 	overflow: hidden;
 	margin: 0;
 	padding: 0;
@@ -11,7 +11,6 @@ body, html {
 
 * {
 	box-sizing: border-box;
-
 }
 
 li {
@@ -25,7 +24,6 @@ table {
 	font-size: 14px;
 	letter-spacing: 2.4px;
 	text-align: center;
-
 }
 
 tr {
@@ -57,16 +55,17 @@ button {
 hr {
 	margin-top: 16px;
 	margin-bottom: 16px;
+}
 
+h3 {
+	letter-spacing: 0.3em;
 }
 
 .piece {
 	height: 100%;
 	padding: auto;
-	background-color: ;
 	background-image: url(/images/center01.png);
 	background-size:cover;
-
 }
 
 .smallbtn {
@@ -75,19 +74,16 @@ hr {
 	padding: 0px 4px 4px 4px;
 	background-color: rgb(50,100,170);
 	color: rgb(50,180,220);
-
-
-
 }
 
 #title {
 	 text-align: center;
 	 width:100%; 
-	 height: 90px; 
+	 height: 110px; 
 	 background: url(/images/bg_top.png) center no-repeat ;
 	 font-size: 36px; 
 	 color: #00f6ff; 
-	 line-height: 90px; 
+	 line-height: 110px; 
 	 margin: 0 auto;
 }
 
@@ -95,13 +91,9 @@ hr {
 	padding: 20px 0px;
 	background-image: url(/images/center01.png);
 	background-position: cover;
-
-
-
 }
 
 #container {
 	margin: 0px;
 	padding: 0px;
-
 }

@@ -111,13 +111,13 @@
 						.attr("width",width)
 						.attr("height",height)
 						.on("mouseover",function() {
-							d3.select("#line"+d3.select(this).attr("id").substring(3,d3.select(this).attr("id").length)).style("color","LawnGreen");
-							d3.select(this).select("rect").attr("fill","black");
+							d3.select("#line"+d3.select(this).attr("id").substring(3,d3.select(this).attr("id").length)).style("color","rgb(30,180,220)");
+							d3.select(this).style("background-color","rgb(0,10,30)");
 							showZone(d3.select(this).attr("id").substring(3,d3.select(this).attr("id").length));
 						})
 						.on("mouseout",function() {
 							d3.select("#line"+d3.select(this).attr("id").substring(3,d3.select(this).attr("id").length)).style("color","white");
-							d3.select(this).select("rect").attr("fill","#262626");
+							d3.select(this).style("background-color","rgb(0,25,50)");
 							showZone(-1);
 						});
 
