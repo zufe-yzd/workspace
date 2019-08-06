@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="64109222-1377-4707-b528-2649b38b6d09" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Python.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Python.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,8 +15,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/env/k-means.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="42" column="9" lean-forward="true" selection-start-line="42" selection-start-column="9" selection-end-line="42" selection-end-column="9" />
+            <state relative-caret-position="300">
+              <caret line="51" column="55" lean-forward="true" selection-start-line="51" selection-start-column="55" selection-end-line="51" selection-end-column="55" />
               <folding>
                 <element signature="e#0#34#0" expanded="true" />
               </folding>
@@ -38,7 +36,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/env/dataByTime.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="596">
+            <state relative-caret-position="2160">
               <caret line="72" column="26" selection-start-line="72" selection-start-column="26" selection-end-line="72" selection-end-column="26" />
             </state>
           </provider>
@@ -89,7 +87,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -101,6 +98,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -313,6 +311,16 @@
     <entry file="file://$PROJECT_DIR$/env/MDS.py" />
     <entry file="file://$PROJECT_DIR$/../Express/public/data/gps_by_time.json" />
     <entry file="file://$PROJECT_DIR$/env/data_by_time.py" />
+    <entry file="file://$PROJECT_DIR$/env/k-means.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="51" column="55" lean-forward="true" selection-start-line="51" selection-start-column="55" selection-end-line="51" selection-end-column="55" />
+          <folding>
+            <element signature="e#0#34#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/env/explain.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
@@ -322,18 +330,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/env/dataByTime.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="596">
+        <state relative-caret-position="2160">
           <caret line="72" column="26" selection-start-line="72" selection-start-column="26" selection-end-line="72" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/env/k-means.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="42" column="9" lean-forward="true" selection-start-line="42" selection-start-column="9" selection-end-line="42" selection-end-column="9" />
-          <folding>
-            <element signature="e#0#34#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
